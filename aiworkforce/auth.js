@@ -1,5 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
 import { getAuth, signInWithPopup, GoogleAuthProvider, OAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+import Swal from 'https://cdn.jsdelivr.net/npm/sweetalert2@11/+esm';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -66,6 +67,19 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnLogout = document.getElementById('btn-logout');
   const userEmailDisplay = document.getElementById('user-email-display');
 
+  // Helper function to translate Firebase auth errors into professional Thai
+  function getFriendlyErrorMessage(error) {
+    if (error.code === 'auth/account-exists-with-different-credential') {
+      return 'อีเมลนี้ถูกผูกไว้กับบัญชีผู้ให้บริการอื่นแล้ว (เช่น คุณอาจเคยล็อกอินด้วย Google) กรุณาใช้วิธีการเดิมในการเข้าสู่ระบบ';
+    } else if (error.code === 'auth/popup-closed-by-user') {
+      return 'ผู้ใช้งานยกเลิกหน้าต่างการเข้าสู่ระบบก่อนที่จะเสร็จสิ้นกระบวนการ';
+    } else if (error.code === 'auth/network-request-failed') {
+      return 'เกิดปัญหาการเชื่อมต่อเครือข่าย กรุณาตรวจสอบอินเทอร์เน็ตและลองใหม่อีกครั้ง';
+    } else {
+      return 'ไม่สามารถยืนยันตัวตนได้: ' + (error.message || 'เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ');
+    }
+  }
+
   // Helper function for backend authorization
   async function verifyTokenWithBackend(idToken, user, silent = false) {
     try {
@@ -92,7 +106,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (!silent) {
-          alert('เข้าสู่ระบบสำเร็จ: ' + data.message);
+          Swal.fire({
+            icon: 'success',
+            title: 'เข้าสู่ระบบสำเร็จ',
+            text: data.message,
+            confirmButtonColor: '#3085d6'
+          });
         }
         
         // 1. Auto-close the popup modal upon successful login
@@ -101,7 +120,12 @@ document.addEventListener('DOMContentLoaded', () => {
       } else if (response.status === 403 || data.authorized === false) {
         // Unauthorized Access: Email not enrolled or no access
         if (!silent) {
-          alert('การเข้าถึงถูกปฏิเสธ: อีเมลนี้ยังไม่ได้ลงทะเบียน หรือไม่มีสิทธิ์เข้าถึงคอร์สเรียนนี้ครับ');
+          Swal.fire({
+            icon: 'error',
+            title: 'ไม่มีสิทธิ์การเข้าถึง',
+            text: 'บัญชีอีเมลของคุณยังไม่ได้ลงทะเบียนในระบบ หรือไม่มีสิทธิ์เข้าถึงเนื้อหานี้ กรุณาติดต่อผู้ดูแลระบบ',
+            confirmButtonColor: '#d33'
+          });
         }
         
         // Automatic Sign-Out
@@ -114,7 +138,12 @@ document.addEventListener('DOMContentLoaded', () => {
         
       } else {
         // Other unexpected errors
-        alert('เกิดข้อผิดพลาด: ' + (data.message || 'ไม่สามารถเข้าสู่ระบบได้'));
+        Swal.fire({
+          icon: 'error',
+          title: 'เกิดข้อผิดพลาด',
+          text: data.message || 'ระบบขัดข้องชั่วคราว กรุณาลองใหม่อีกครั้งในภายหลัง',
+          confirmButtonColor: '#d33'
+        });
         await signOut(auth);
         userProfileSection.style.display = 'none';
         loginSection.style.display = 'block';
@@ -124,7 +153,12 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch (error) {
       // Network or Server Errors
       console.error('Network or Backend error:', error);
-      alert('ไม่สามารถเชื่อมต่อกับระบบเซิร์ฟเวอร์ได้ โปรดตรวจสอบการเชื่อมต่ออินเทอร์เน็ตหรือเซิร์ฟเวอร์');
+      Swal.fire({
+        icon: 'error',
+        title: 'ข้อผิดพลาดในการเชื่อมต่อ',
+        text: 'ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ได้ กรุณาตรวจสอบอินเทอร์เน็ตของคุณและลองใหม่อีกครั้ง',
+        confirmButtonColor: '#d33'
+      });
       
       // Automatic Sign-Out and UI Reset
       await signOut(auth);
@@ -146,7 +180,12 @@ document.addEventListener('DOMContentLoaded', () => {
       await verifyTokenWithBackend(idToken, result.user);
     } catch (error) {
       console.error('Error during Google sign-in:', error);
-      alert('Google Sign-In Failed: ' + error.message);
+      Swal.fire({
+        icon: 'error',
+        title: 'การเข้าสู่ระบบด้วย Google ล้มเหลว',
+        text: getFriendlyErrorMessage(error),
+        confirmButtonColor: '#d33'
+      });
     }
   });
 
@@ -162,7 +201,12 @@ document.addEventListener('DOMContentLoaded', () => {
       await verifyTokenWithBackend(idToken, result.user);
     } catch (error) {
       console.error('Error during Microsoft sign-in:', error);
-      alert('Microsoft Sign-In Failed: ' + error.message);
+      Swal.fire({
+        icon: 'error',
+        title: 'การเข้าสู่ระบบด้วย Microsoft ล้มเหลว',
+        text: getFriendlyErrorMessage(error),
+        confirmButtonColor: '#d33'
+      });
     }
   });
 
@@ -184,7 +228,12 @@ document.addEventListener('DOMContentLoaded', () => {
       window.closeAuthModal();
     } catch (error) {
       console.error('Error during sign-out:', error);
-      alert('Sign-Out Failed: ' + error.message);
+      Swal.fire({
+        icon: 'error',
+        title: 'การออกจากระบบล้มเหลว',
+        text: 'เกิดข้อผิดพลาด: ' + error.message,
+        confirmButtonColor: '#d33'
+      });
     }
   });
 

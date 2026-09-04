@@ -94,3 +94,8 @@
     transform: translateY(-2px);
     box-shadow: 0 6px 16px -4px rgba(245, 166, 35, 0.4);
   }
+
+/* Ensure SweetAlert2 popups always appear above the auth modal (z-index: 9999) */
+div.swal2-container {
+  z-index: 10000 !important;
+}
