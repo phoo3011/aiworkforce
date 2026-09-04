@@ -1,0 +1,14 @@
+# Node modules
+node_modules/
+aiworkforce-backend/node_modules/
+
+# Secrets and Databases (CRITICAL: DO NOT COMMIT)
+aiworkforce-backend/serviceAccountKey.json
+aiworkforce-backend/database.sqlite
+
+# System and Log files
+.DS_Store
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

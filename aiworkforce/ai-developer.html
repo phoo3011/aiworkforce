@@ -3,23 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Marketing Track | โครงการพัฒนากำลังคนด้านปัญญาประดิษฐ์</title>
+<title>AI Developer Track | โครงการพัฒนากำลังคนด้านปัญญาประดิษฐ์</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <style>
   :root{
-    --navy-deep:#3a1f0c;
-    --navy:#5a2d10;
-    --navy-light:#7a3d16;
-    --circuit:#c45e18;
-    --amber:#c45e18;
-    --amber-soft:#e0894a;
-    --coral:#b45414;
-    --paper:#f7f0e6;
-    --ink:#3a1f0c;
-    --mint:#f0c48a;
-    --line: rgba(255,255,255,0.16);
+    --navy-deep:#0a1230;
+    --navy:#0d1b4c;
+    --navy-light:#16296b;
+    --circuit:#2a3f8f;
+    --amber:#f5821f;
+    --amber-soft:#ffb15c;
+    --coral:#ff6a5c;
+    --paper:#f4f0e6;
+    --ink:#0a1230;
+    --mint:#5ee6c8;
+    --line: rgba(255,255,255,0.12);
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   html{scroll-behavior:smooth;}
@@ -35,29 +35,29 @@
   .hero{
     position:relative;
     background:
-      radial-gradient(ellipse at 88% 42%, rgba(255,255,255,0.22), transparent 42%),
-      linear-gradient(180deg, #ff8c2a 0%, #f37021 42%, #ffd7b0 78%, #fff 100%);
+      radial-gradient(ellipse at 90% 0%, rgba(245,130,31,0.16), transparent 42%),
+      linear-gradient(180deg,var(--navy-deep) 0%, var(--navy) 70%);
     color:#fff;
-    padding:20px 6vw 110px;
+    padding:20px 6vw 70px;
     overflow:hidden;
   }
   .hero::before{
     content:"";
     position:absolute; inset:0;
     background-image:
-      linear-gradient(rgba(255,255,255,0.12) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.12) 1px, transparent 1px);
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
     background-size:64px 64px;
-    opacity:0.22;
+    opacity:0.35;
     mask-image:linear-gradient(180deg, black, transparent 85%);
     pointer-events:none;
   }
   .logos{
     position:relative;
     display:flex; align-items:center; gap:18px; flex-wrap:wrap;
-    font-size:0.78rem; color:rgba(255,255,255,0.85);
+    font-size:0.78rem; color:rgba(255,255,255,0.55);
     padding-bottom:26px; margin-bottom:34px;
-    border-bottom:1px solid rgba(255,255,255,0.28);
+    border-bottom:1px solid var(--line);
   }
   .logos img{height:34px; width:auto; display:block;}
   .logos a:has(img){display:flex; align-items:center; text-decoration:none;}
@@ -72,9 +72,9 @@
     display:inline-flex; align-items:center; gap:10px;
     font-family:'IBM Plex Mono',monospace;
     font-size:0.75rem; letter-spacing:0.18em; text-transform:uppercase;
-    color:rgba(255,255,255,0.92); margin-bottom:20px;
+    color:var(--mint); margin-bottom:20px;
   }
-  .eyebrow::before{content:"●"; color:#3a1f0c; animation:pulse 2s infinite;}
+  .eyebrow::before{content:"●"; color:var(--coral); animation:pulse 2s infinite;}
   @keyframes pulse{0%,100%{opacity:1;} 50%{opacity:0.25;}}
   h1{
     font-size:clamp(2.1rem, 4.4vw, 3.6rem);
@@ -82,14 +82,14 @@
     line-height:1.12;
     margin-bottom:18px;
   }
-  .hero h1 .accent{
-    color:#3a1f0c;
-    background:none;
-    -webkit-text-fill-color:#3a1f0c;
+  h1 .accent{
+    color:var(--amber);
+    background:linear-gradient(90deg,var(--amber-soft),var(--amber));
+    -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
   }
   .hero-sub{
     font-size:1.05rem; line-height:1.75;
-    color:rgba(255,255,255,0.92);
+    color:rgba(255,255,255,0.78);
     max-width:52ch; margin-bottom:32px;
   }
   .hero-cta{display:flex; gap:14px; flex-wrap:wrap; align-items:center;}
@@ -106,38 +106,23 @@
     box-shadow:0 10px 30px -8px rgba(245,166,35,0.55);
   }
   .btn-primary:hover{transform:translateY(-2px); box-shadow:0 14px 34px -6px rgba(245,166,35,0.65);}
-  .hero .btn-primary{
-    background:#3a1f0c;
-    color:#fff;
-    box-shadow:0 10px 30px -8px rgba(58,31,12,0.45);
-  }
-  .hero .btn-primary:hover{transform:translateY(-2px); box-shadow:0 14px 34px -6px rgba(58,31,12,0.55);}
   .btn-ghost{
-    color:#fff; border:1px solid rgba(255,255,255,0.45); background:rgba(255,255,255,0.08);
+    color:#fff; border:1px solid var(--line); background:rgba(255,255,255,0.04);
   }
-  .btn-ghost:hover{background:rgba(255,255,255,0.16);}
+  .btn-ghost:hover{background:rgba(255,255,255,0.09);}
   .hero-meta{
     display:flex; gap:26px; margin-top:34px; flex-wrap:wrap;
   }
-  .hero-meta div{font-family:'IBM Plex Mono',monospace; font-size:0.75rem; color:#5a2d10;}
-  .hero-meta b{display:block; font-family:'Prompt',sans-serif; font-size:1.1rem; color:#3a1f0c; font-weight:700;}
+  .hero-meta div{font-family:'IBM Plex Mono',monospace; font-size:0.75rem; color:rgba(255,255,255,0.5);}
+  .hero-meta b{display:block; font-family:'Prompt',sans-serif; font-size:1.1rem; color:#fff; font-weight:600;}
 
+  /* signature: neural sketch */
   .signature{
     position:relative;
+    aspect-ratio:1/1;
     display:flex; align-items:center; justify-content:center;
   }
-  .signature::before{
-    content:"";
-    position:absolute;
-    width:92%; aspect-ratio:1/1;
-    border-radius:50%;
-    border:2px solid rgba(255,255,255,0.28);
-    box-shadow:
-      0 0 0 18px rgba(255,255,255,0.08),
-      0 0 0 42px rgba(173,216,255,0.12);
-    pointer-events:none;
-  }
-  .signature img{position:relative; width:100%; height:auto; display:block;}
+  .signature img{width:100%; height:100%; object-fit:contain; display:block;}
 
   /* ---------- TRACKS ---------- */
   .section{padding:70px 6vw;}
@@ -388,13 +373,13 @@
     gap:24px;
   }
   .outcome-card{
-    border:2px solid var(--navy); border-radius:18px; padding:28px 30px;
+    border:2px solid var(--amber); border-radius:18px; padding:28px 30px;
     background:#fff;
   }
-  .outcome-card .head{display:flex; align-items:center; gap:12px; margin-bottom:16px;}
+  .outcome-card .head{display:flex; align-items:center; gap:14px; margin-bottom:18px;}
   .outcome-card .icon{
-    width:38px; height:38px; border-radius:10px; background:var(--amber);
-    display:flex; align-items:center; justify-content:center; font-size:1.1rem; flex-shrink:0;
+    width:48px; height:48px; border-radius:50%; background:var(--amber);
+    display:flex; align-items:center; justify-content:center; font-size:1.3rem; flex-shrink:0; color:#fff;
   }
   .outcome-card h3{font-size:1.5rem; font-weight:800; color:var(--amber);}
   .outcome-card ul{list-style:none; display:flex; flex-direction:column; gap:9px;}
@@ -435,6 +420,9 @@
   /* ---------- TRACKS v2 (numbered poster style) ---------- */
   .tracks-v2{display:flex; flex-direction:column; gap:16px;}
   .track-row{display:flex; align-items:center; gap:22px;}
+  .track-row .track-pill{transition:transform .18s ease, box-shadow .18s ease;}
+  .track-row:hover .track-pill{transform:translateX(4px); box-shadow:0 8px 22px -8px rgba(0,0,0,0.35);}
+  .curric-block{scroll-margin-top:24px;}
   .track-num{
     font-family:'IBM Plex Mono',monospace; font-weight:800; font-size:2.6rem;
     color:var(--amber); width:64px; flex-shrink:0; text-align:center;
@@ -570,37 +558,40 @@
     .cal-legend{padding:12px 14px; font-size:0.75rem;}
   }
 </style>
+<link rel="stylesheet" href="auth.css">
 </head>
 <body>
 
 <section class="hero">
   <div class="logos">
     <a href="index.html"><img src="images/partner-logos.png" alt="PMU-B, CMU, CAMT, dii, DITC, AiAT"></a>
-    <a href="ai-developer.html" style="margin-left:auto; color:#fff; text-decoration:none; border:1px solid rgba(255,255,255,0.45); padding:6px 14px; border-radius:100px; font-family:'IBM Plex Mono',monospace; font-size:0.72rem;">สาย Developer <i class="fa-solid fa-arrow-right"></i></a>
+    <div style="margin-left:auto; display:flex; gap:12px; align-items:center;">
+      <a href="ai-marketing.html" style="color:var(--amber-soft); text-decoration:none; border:1px solid var(--line); padding:6px 14px; border-radius:100px; font-family:'IBM Plex Mono',monospace; font-size:0.72rem;">สาย Marketing →</a>
+      <button class="btn-login-nav" onclick="openAuthModal()">Login</button>
+    </div>
   </div>
 
   <div class="hero-grid">
     <div>
-      <div class="eyebrow">AI Marketing Track · เปิดรับสมัครแล้ววันนี้</div>
-      <h1>พัฒนากำลังคนสาย<br><span class="accent">AI Marketing</span></h1>
-      <p class="hero-sub">
-        หลักสูตรบูรณาการร่วมภาคอุตสาหกรรม ผ่านแพลตฟอร์มการเรียนรู้ยืดหยุ่นตลอดชีวิต
-        AI Entrepreneurship Curriculum สำหรับนักการตลาดและผู้นำทีม Digital Marketing
+      <div class="eyebrow">AI Developer Track · เปิดรับสมัครแล้ววันนี้</div>
+      <h1>พัฒนากำลังคนสาย<br><span class="accent">AI Developer</span></h1>
+      <p class="hero-sub" style="margin-bottom:20px;">
+        แบบบูรณาการร่วมอุตสาหกรรมผ่านแพลตฟอร์ม<br>การเรียนรู้ยืดหยุ่นตลอดชีวิต
+      </p>
+      <p class="hero-sub" style="font-weight:600; color:#fff; margin-bottom:32px;">
+        หลักสูตร AI Entrepreneurship Curriculum<br>
+        สำหรับผู้ประกอบการสาย <span style="color:var(--amber);">IT Developer</span>
       </p>
       <div class="hero-cta">
         <a class="btn btn-primary" href="https://docs.google.com/forms/d/e/1FAIpQLSc3-MZvEeWD0tDkmPyx9K5VR8dCAzjK3cwzMsK2wqrkh-Kyzw/viewform" target="_blank" rel="noopener">
-          สมัครเรียนตอนนี้ <i class="fa-solid fa-arrow-right"></i>
+          สมัครเรียนตอนนี้ →
         </a>
         <a class="btn btn-ghost" href="#tracks">ดูรายละเอียดหลักสูตร</a>
-      </div>
-      <div class="hero-meta">
-        <div><b>22 ส.ค. 2026</b>เริ่มเรียน Phase 1</div>
-        <div><b>46 ชม. + 6 เดือน</b>ระยะเวลารวม</div>
       </div>
     </div>
 
     <div class="signature">
-      <img src="images/ai-marketing-hero.png" alt="ผู้เรียนสาย AI Marketing">
+      <img src="images/ai-developer-hero.png" alt="AI Developer">
     </div>
   </div>
 </section>
@@ -646,30 +637,30 @@
 
 <section class="section" id="tracks">
   <div class="section-head">
-    <span class="kicker">Curriculum · AI Marketing</span>
-    <h2>2 เส้นทางการเรียนรู้สำหรับสาย Digital Marketing</h2>
+    <span class="kicker">Curriculum · AI Developer</span>
+    <h2>2 เส้นทางการเรียนรู้สำหรับสาย Developer</h2>
   </div>
   <div class="tracks-v2">
-    <div class="track-row">
+    <a class="track-row" href="#track-dl" style="text-decoration:none; cursor:pointer;">
       <span class="track-num">01</span>
       <div class="track-pill">
-        <span class="picon"><i class="fa-solid fa-bullhorn"></i></span>
+        <span class="picon">&lt;/&gt;</span>
         <div>
-          <h3>AI Marketing Learner</h3>
-          <p>นักการตลาดที่สร้าง campaign และ dashboard</p>
+          <h3>AI Developer Learner</h3>
+          <p>นักพัฒนาที่ต้องการสร้าง AI-enabled software</p>
         </div>
       </div>
-    </div>
-    <div class="track-row">
+    </a>
+    <a class="track-row" href="#track-dt" style="text-decoration:none; cursor:pointer;">
       <span class="track-num">02</span>
       <div class="track-pill">
-        <span class="picon"><i class="fa-solid fa-chart-line"></i></span>
+        <span class="picon">🧠</span>
         <div>
-          <h3>AI Marketing Trainer</h3>
-          <p>ผู้นำทีมกลยุทธ์ AI marketing และ governance</p>
+          <h3>AI Developer Trainer</h3>
+          <p>ผู้นำทีม Dev ที่วาง architecture และ mentoring</p>
         </div>
       </div>
-    </div>
+    </a>
   </div>
 
   <div class="aiat-strip">
@@ -712,12 +703,12 @@
     </table>
   </div>
 
-  <div class="curric-block theme-ml">
+  <div class="curric-block theme-dl" id="track-dl">
     <div class="curric-head">
-      <div class="curric-badge">ML</div>
+      <div class="curric-badge">DL</div>
       <div>
-        <h3>Track-specific Lecture + Lab + Workshop — AI Marketing Learner</h3>
-        <p>นักการตลาดที่สร้าง campaign และ dashboard</p>
+        <h3>Track-specific Lecture + Lab + Workshop — AI Developer Learner</h3>
+        <p>นักพัฒนาที่ต้องการสร้าง AI-enabled software</p>
       </div>
     </div>
     <table class="curric-table">
@@ -725,8 +716,8 @@
       <tbody>
         <tr><td>Task Specific Lecture + Lab</td><td>3</td><td>Vibe Code + UXUI</td><td><span class="mode-pill">Lecture + Lab</span></td></tr>
         <tr><td>Task Specific Lecture + Lab</td><td>3</td><td>Vibe Code + UXUI</td><td><span class="mode-pill">Lecture + Lab</span></td></tr>
-        <tr><td>Task Specific Lecture + Lab</td><td>3</td><td>Vibe Code + Data Analytics (CF)</td><td><span class="mode-pill">Lecture + Lab</span></td></tr>
-        <tr><td>Task Specific Lecture + Lab</td><td>3</td><td>Vibe Code + Data Analytics (CF)</td><td><span class="mode-pill">Lecture + Lab</span></td></tr>
+        <tr><td>Task Specific Lecture + Lab</td><td>3</td><td>LLM Evaluation</td><td><span class="mode-pill">Lecture + Lab</span></td></tr>
+        <tr><td>Task Specific Lecture + Lab</td><td>4</td><td>Vibe Code + DB</td><td><span class="mode-pill">Lecture + Lab</span></td></tr>
         <tr><td>Task Specific Lecture + Lab</td><td>4</td><td>AI and Media</td><td><span class="mode-pill">Lecture + Lab</span></td></tr>
         <tr><td>Task Specific Lecture + Lab</td><td>4</td><td>AI and Social Reasoning</td><td><span class="mode-pill">Lecture + Lab</span></td></tr>
         <tr><td>Task Specific Lecture + Lab</td><td>4</td><td>Agentic AI for Marketing</td><td><span class="mode-pill">Lecture + Lab</span></td></tr>
@@ -737,30 +728,31 @@
     </table>
   </div>
 
-  <div class="curric-block theme-mt">
+  <div class="curric-block theme-dt" id="track-dt">
     <div class="curric-head">
-      <div class="curric-badge">MT</div>
+      <div class="curric-badge">DT</div>
       <div>
-        <h3>Track-specific Lecture + Lab + Workshop — AI Marketing Trainer</h3>
-        <p>ผู้กำหนดกลยุทธ์ AI marketing และ governance</p>
+        <h3>Track-specific Lecture + Lab + Workshop — AI Developer Trainer</h3>
+        <p>ผู้นำทีม Dev ที่วาง architecture และ mentoring</p>
       </div>
     </div>
     <table class="curric-table">
       <thead><tr><th>Session</th><th>ชั่วโมง</th><th>หัวข้อ</th><th></th></tr></thead>
       <tbody>
         <tr><td>Task Specific Lecture + Lab</td><td>3</td><td>Vibe Code + UXUI</td><td><span class="mode-pill">Lecture + Lab</span></td></tr>
-        <tr><td>Task Specific Lecture + Lab</td><td>3</td><td>Vibe Code + UXUI</td><td><span class="mode-pill">Lecture + Lab</span></td></tr>
-        <tr><td>Task Specific Lecture + Lab</td><td>3</td><td>Vibe Code + Data Analytics</td><td><span class="mode-pill">Lecture + Lab</span></td></tr>
-        <tr><td>Task Specific Lecture + Lab</td><td>3</td><td>Vibe Code + Data Analytics</td><td><span class="mode-pill">Lecture + Lab</span></td></tr>
-        <tr><td>Task Specific Lecture + Lab</td><td>4</td><td>AI and Media</td><td><span class="mode-pill">Lecture + Lab</span></td></tr>
-        <tr><td>Task Specific Lecture + Lab</td><td>4</td><td>AI and Social Reasoning</td><td><span class="mode-pill">Lecture + Lab</span></td></tr>
-        <tr><td>Task Specific Lecture + Lab</td><td>4</td><td>Agentic AI for Marketing</td><td><span class="mode-pill">Lecture + Lab</span></td></tr>
-        <tr><td>Task Specific Lecture + Lab</td><td>4</td><td>AI Enable System (Vibe)</td><td><span class="mode-pill">Lecture + Lab</span></td></tr>
+        <tr><td>Task Specific Lecture + Lab</td><td>3</td><td>LLM Concept</td><td><span class="mode-pill">Lecture + Lab</span></td></tr>
+        <tr><td>Task Specific Lecture + Lab</td><td>3</td><td>LLM Evaluation</td><td><span class="mode-pill">Lecture + Lab</span></td></tr>
+        <tr><td>Task Specific Lecture + Lab</td><td>4</td><td>Vibe Code + DB</td><td><span class="mode-pill">Lecture + Lab</span></td></tr>
+        <tr><td>Task Specific Lecture + Lab</td><td>4</td><td>LLM RAG</td><td><span class="mode-pill">Lecture + Lab</span></td></tr>
+        <tr><td>Task Specific Lecture + Lab</td><td>4</td><td>Guardrail + Security AI</td><td><span class="mode-pill">Lecture + Lab</span></td></tr>
+        <tr><td>Task Specific Lecture + Lab</td><td>4</td><td>Agentic AI</td><td><span class="mode-pill">Lecture + Lab</span></td></tr>
+        <tr><td>Task Specific Lecture + Lab</td><td>4</td><td>AI Enable System</td><td><span class="mode-pill">Lecture + Lab</span></td></tr>
         <tr><td>Task Specific Mini Workshop</td><td>3</td><td>Real Use Case Implementation</td><td><span class="mode-pill">Workshop</span></td></tr>
         <tr><td>Task Specific Mini Workshop</td><td>3</td><td>Real Use Case Implementation</td><td><span class="mode-pill">Workshop</span></td></tr>
       </tbody>
     </table>
   </div>
+
 </section>
 
 <section class="section" id="calendar">
@@ -1021,7 +1013,7 @@
       <div class="sub">เริ่มเรียนสิงหาคม 2026</div>
       <div class="sub">ที่นั่งจำกัด — 30 คนแรกได้รับค่าตอบแทนสูงสุด 3,500 บาท/เดือน</div>
       <a class="btn btn-primary" href="https://docs.google.com/forms/d/e/1FAIpQLSc3-MZvEeWD0tDkmPyx9K5VR8dCAzjK3cwzMsK2wqrkh-Kyzw/viewform" target="_blank" rel="noopener">
-        สมัครเรียนคลิก <i class="fa-solid fa-arrow-right"></i>
+        สมัครเรียนคลิก →
       </a>
     </div>
   </div>
@@ -1039,5 +1031,6 @@
   </div>
 </footer>
 
+<script type="module" src="auth.js"></script>
 </body>
 </html>

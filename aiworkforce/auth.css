@@ -1,0 +1,96 @@
+/* ---------- AUTH UI ---------- */
+.auth-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  backdrop-filter: blur(4px);
+}
+.auth-wrapper {
+  position: relative;
+  width: 90%;
+  max-width: 400px;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  background-color: #ffffff;
+  text-align: center;
+  color: #333;
+  margin: 0 auto;
+  border: 1px solid #e5e7eb;
+}
+.auth-heading {
+  margin-top: 0;
+  margin-bottom: 24px;
+  color: #111;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+.auth-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  background-color: #ffffff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+}
+.auth-btn:hover {
+  background-color: #f9fafb;
+  transform: translateY(-1px);
+}
+.btn-google {
+  color: #4285F4;
+}
+.btn-microsoft {
+  color: #00a4ef;
+}
+.btn-logout {
+  background-color: #ef4444;
+  color: #ffffff;
+  border: none;
+  margin-top: 20px;
+}
+.btn-logout:hover {
+  background-color: #dc2626;
+}
+.user-info {
+  margin-bottom: 20px;
+  font-size: 1rem;
+  color: #4b5563;
+}
+  .user-email {
+    font-weight: 700;
+    color: #111827;
+  }
+  
+  .btn-login-nav {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--amber, #f5821f);
+    color: var(--navy-deep, #04221f);
+    font-size: 0.95rem;
+    font-weight: 700;
+    padding: 8px 24px;
+    border-radius: 100px;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+    font-family: inherit;
+  }
+  
+  .btn-login-nav:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px -4px rgba(245, 166, 35, 0.4);
+  }

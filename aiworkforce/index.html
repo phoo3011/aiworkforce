@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="auth.css">
 <style>
   :root{
     --navy-deep:#04221f;
@@ -466,6 +467,7 @@
     .funding{overflow-x:auto; -webkit-overflow-scrolling:touch;}
     .tax-banner{padding:24px 20px; gap:16px;}
   }
+
 </style>
 </head>
 <body>
@@ -473,7 +475,7 @@
 <section class="hero">
   <div class="logos">
     <a href="index.html"><img src="images/partner-logos.png" alt="PMU-B, CMU, CAMT, dii, DITC, AiAT"></a>
-    
+    <button class="btn-login-nav" onclick="openAuthModal()">Login</button>
   </div>
 
   <div class="hero-grid">
@@ -723,5 +725,6 @@
   </div>
 </footer>
 
+<script type="module" src="auth.js"></script>
 </body>
 </html>
