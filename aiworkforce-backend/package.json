@@ -1,10 +1,14 @@
 {
   "name": "aiworkforce-backend",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Protected course API for AI Workforce",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js",
+    "seed": "node seed.js",
+    "import:enrollments": "node import-enrollments.js",
+    "import:content": "node import-content.js",
+    "test": "node --test"
   },
   "keywords": [],
   "author": "",
