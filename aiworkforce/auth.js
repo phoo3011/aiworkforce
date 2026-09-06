@@ -225,3 +225,30 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
+
+window.addEventListener('aiworkforce:auth-changed', (event) => {
+  const access = event.detail;
+  if (!access) return;
+  const track = access.track || 'all';
+
+  const allowedClasses = ['theme-core'];
+  if (track === 'dl' || track === 'all') allowedClasses.push('theme-dl');
+  if (track === 'dt' || track === 'all') allowedClasses.push('theme-dt');
+  if (track === 'ml' || track === 'all') allowedClasses.push('theme-ml');
+  if (track === 'mt' || track === 'all') allowedClasses.push('theme-mt');
+
+  document.querySelectorAll('.curric-block').forEach((block) => {
+    const hasTheme = Array.from(block.classList).some(c => c.startsWith('theme-'));
+    if (!hasTheme) return;
+
+    const isAllowed = allowedClasses.some(c => block.classList.contains(c));
+    if (!isAllowed) {
+      block.querySelectorAll('.lesson-access').forEach(btn => {
+        btn.classList.remove('lesson-access');
+        btn.classList.add('lesson-unavailable', 'track-locked');
+        btn.removeAttribute('href');
+        btn.innerHTML = '<i class="fa-solid fa-lock" aria-hidden="true"></i> ล็อกสำหรับสายคุณ';
+      });
+    }
+  });
+});

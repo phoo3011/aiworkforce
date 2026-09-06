@@ -104,7 +104,7 @@ function createApp({ database, verifyIdToken, allowedOrigins, rateLimitOptions }
       }
 
       const student = await database.get(`
-        SELECT id, email, status, firebase_uid
+        SELECT id, email, status, firebase_uid, track
         FROM students
         WHERE LOWER(email) = ?
       `, [email]);
@@ -133,7 +133,11 @@ function createApp({ database, verifyIdToken, allowedOrigins, rateLimitOptions }
     }
   }
 
-  async function getStudentCourses(studentId) {
+  async function getStudentCourses(studentId, track) {
+    let trackCondition = '';
+    if (track === 'dl' || track === 'dt') trackCondition = "AND c.slug IN ('ai-developer', 'core-ai-foundation')";
+    else if (track === 'ml' || track === 'mt') trackCondition = "AND c.slug IN ('ai-marketing', 'core-ai-foundation')";
+
     return database.all(`
       SELECT
         c.id, c.slug, c.title, c.description,
@@ -142,7 +146,7 @@ function createApp({ database, verifyIdToken, allowedOrigins, rateLimitOptions }
       FROM courses c
       LEFT JOIN lessons l ON l.course_id = c.id AND l.active = 1
       LEFT JOIN progress p ON p.lesson_id = l.id AND p.student_id = ?
-      WHERE c.active = 1
+      WHERE c.active = 1 ${trackCondition}
       GROUP BY c.id
       ORDER BY c.title
     `, [studentId]);
@@ -150,7 +154,7 @@ function createApp({ database, verifyIdToken, allowedOrigins, rateLimitOptions }
 
   app.get('/api/me', authenticate, async (req, res, next) => {
     try {
-      res.json({ authorized: true, email: req.student.email, courses: await getStudentCourses(req.student.id) });
+      res.json({ authorized: true, email: req.student.email, track: req.student.track, courses: await getStudentCourses(req.student.id, req.student.track) });
     } catch (error) {
       next(error);
     }
@@ -162,7 +166,8 @@ function createApp({ database, verifyIdToken, allowedOrigins, rateLimitOptions }
       res.json({
         authorized: true,
         email: req.student.email,
-        courses: await getStudentCourses(req.student.id),
+        track: req.student.track,
+        courses: await getStudentCourses(req.student.id, req.student.track),
         message: 'ยืนยันสิทธิ์สำเร็จ'
       });
     } catch (error) {
@@ -172,7 +177,7 @@ function createApp({ database, verifyIdToken, allowedOrigins, rateLimitOptions }
 
   app.get('/api/courses', authenticate, async (req, res, next) => {
     try {
-      res.json({ courses: await getStudentCourses(req.student.id) });
+      res.json({ courses: await getStudentCourses(req.student.id, req.student.track) });
     } catch (error) {
       next(error);
     }
@@ -180,10 +185,15 @@ function createApp({ database, verifyIdToken, allowedOrigins, rateLimitOptions }
 
   app.get('/api/courses/:courseSlug/lessons', authenticate, async (req, res, next) => {
     try {
+      let trackCondition = '';
+      const track = req.student.track;
+      if (track === 'dl' || track === 'dt') trackCondition = "AND c.slug IN ('ai-developer', 'core-ai-foundation')";
+      else if (track === 'ml' || track === 'mt') trackCondition = "AND c.slug IN ('ai-marketing', 'core-ai-foundation')";
+
       const course = await database.get(`
         SELECT c.id, c.slug, c.title, c.description
         FROM courses c
-        WHERE c.slug = ? AND c.active = 1
+        WHERE c.slug = ? AND c.active = 1 ${trackCondition}
       `, [req.params.courseSlug]);
 
       if (!course) {
@@ -213,6 +223,11 @@ function createApp({ database, verifyIdToken, allowedOrigins, rateLimitOptions }
 
   app.get('/api/lessons/:lessonId', authenticate, async (req, res, next) => {
     try {
+      let trackCondition = '';
+      const track = req.student.track;
+      if (track === 'dl' || track === 'dt') trackCondition = "AND c.slug IN ('ai-developer', 'core-ai-foundation')";
+      else if (track === 'ml' || track === 'mt') trackCondition = "AND c.slug IN ('ai-marketing', 'core-ai-foundation')";
+
       const lesson = await database.get(`
         SELECT
           l.id, l.slug, l.title, l.description, l.lesson_order AS lessonOrder,
@@ -225,7 +240,7 @@ function createApp({ database, verifyIdToken, allowedOrigins, rateLimitOptions }
               AND watched.event_type = 'video_ended'
           ) AS completed
         FROM lessons l
-        JOIN courses c ON c.id = l.course_id AND c.active = 1
+        JOIN courses c ON c.id = l.course_id AND c.active = 1 ${trackCondition}
         WHERE l.id = ? AND l.active = 1
       `, [req.student.id, req.params.lessonId]);
 
@@ -272,10 +287,15 @@ function createApp({ database, verifyIdToken, allowedOrigins, rateLimitOptions }
         return;
       }
 
+      let trackCondition = '';
+      const track = req.student.track;
+      if (track === 'dl' || track === 'dt') trackCondition = "AND c.slug IN ('ai-developer', 'core-ai-foundation')";
+      else if (track === 'ml' || track === 'mt') trackCondition = "AND c.slug IN ('ai-marketing', 'core-ai-foundation')";
+
       const access = await database.get(`
         SELECT l.id
         FROM lessons l
-        JOIN courses c ON c.id = l.course_id AND c.active = 1
+        JOIN courses c ON c.id = l.course_id AND c.active = 1 ${trackCondition}
         WHERE l.id = ? AND l.active = 1
       `, [lessonId]);
 

@@ -101,6 +101,7 @@ async function initializeDatabase(database) {
   // ALTER-safe migrations preserve databases created by the original app.
   await ensureColumn(database, 'students', 'firebase_uid', 'TEXT');
   await ensureColumn(database, 'students', 'status', "TEXT NOT NULL DEFAULT 'active'");
+  await ensureColumn(database, 'students', 'track', "TEXT NOT NULL DEFAULT 'all'");
 
   await database.exec(`
     CREATE INDEX IF NOT EXISTS idx_students_email_lower ON students(LOWER(email));
