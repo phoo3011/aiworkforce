@@ -6,7 +6,6 @@
   "scripts": {
     "start": "node server.js",
     "seed": "node seed.js",
-    "import:enrollments": "node import-enrollments.js",
     "import:content": "node import-content.js",
     "test": "node --test"
   },

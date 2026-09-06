@@ -1,11 +1,6 @@
 const express = require('express');
 const cors = require('cors');
 
-const ACTIVE_ENROLLMENT_SQL = `
-  e.status = 'active'
-  AND (e.expires_at IS NULL OR datetime(e.expires_at) > CURRENT_TIMESTAMP)
-`;
-
 function parseAllowedOrigins(value) {
   return (value || [
     'http://localhost:5500',
@@ -142,16 +137,13 @@ function createApp({ database, verifyIdToken, allowedOrigins, rateLimitOptions }
     return database.all(`
       SELECT
         c.id, c.slug, c.title, c.description,
-        e.granted_at AS grantedAt,
-        e.expires_at AS expiresAt,
         COUNT(DISTINCT l.id) AS lessonCount,
         COUNT(DISTINCT CASE WHEN p.event_type = 'video_ended' THEN p.lesson_id END) AS completedLessons
-      FROM enrollments e
-      JOIN courses c ON c.id = e.course_id AND c.active = 1
+      FROM courses c
       LEFT JOIN lessons l ON l.course_id = c.id AND l.active = 1
-      LEFT JOIN progress p ON p.lesson_id = l.id AND p.student_id = e.student_id
-      WHERE e.student_id = ? AND ${ACTIVE_ENROLLMENT_SQL}
-      GROUP BY c.id, e.id
+      LEFT JOIN progress p ON p.lesson_id = l.id AND p.student_id = ?
+      WHERE c.active = 1
+      GROUP BY c.id
       ORDER BY c.title
     `, [studentId]);
   }
@@ -191,12 +183,11 @@ function createApp({ database, verifyIdToken, allowedOrigins, rateLimitOptions }
       const course = await database.get(`
         SELECT c.id, c.slug, c.title, c.description
         FROM courses c
-        JOIN enrollments e ON e.course_id = c.id
-        WHERE c.slug = ? AND c.active = 1 AND e.student_id = ? AND ${ACTIVE_ENROLLMENT_SQL}
-      `, [req.params.courseSlug, req.student.id]);
+        WHERE c.slug = ? AND c.active = 1
+      `, [req.params.courseSlug]);
 
       if (!course) {
-        res.status(403).json({ message: 'คุณไม่มีสิทธิ์เข้าหลักสูตรนี้' });
+        res.status(404).json({ message: 'ไม่พบหลักสูตรนี้หรือหลักสูตรยังไม่เปิดใช้งาน' });
         return;
       }
 
@@ -229,18 +220,17 @@ function createApp({ database, verifyIdToken, allowedOrigins, rateLimitOptions }
           c.slug AS courseSlug, c.title AS courseTitle,
           EXISTS(
             SELECT 1 FROM progress watched
-            WHERE watched.student_id = e.student_id
+            WHERE watched.student_id = ?
               AND watched.lesson_id = l.id
               AND watched.event_type = 'video_ended'
           ) AS completed
         FROM lessons l
         JOIN courses c ON c.id = l.course_id AND c.active = 1
-        JOIN enrollments e ON e.course_id = c.id
-        WHERE l.id = ? AND l.active = 1 AND e.student_id = ? AND ${ACTIVE_ENROLLMENT_SQL}
-      `, [req.params.lessonId, req.student.id]);
+        WHERE l.id = ? AND l.active = 1
+      `, [req.student.id, req.params.lessonId]);
 
       if (!lesson) {
-        res.status(403).json({ message: 'ไม่พบบทเรียนหรือคุณไม่มีสิทธิ์เข้าถึง' });
+        res.status(404).json({ message: 'ไม่พบบทเรียนหรือบทเรียนยังไม่เปิดใช้งาน' });
         return;
       }
 
@@ -286,12 +276,11 @@ function createApp({ database, verifyIdToken, allowedOrigins, rateLimitOptions }
         SELECT l.id
         FROM lessons l
         JOIN courses c ON c.id = l.course_id AND c.active = 1
-        JOIN enrollments e ON e.course_id = c.id
-        WHERE l.id = ? AND l.active = 1 AND e.student_id = ? AND ${ACTIVE_ENROLLMENT_SQL}
-      `, [lessonId, req.student.id]);
+        WHERE l.id = ? AND l.active = 1
+      `, [lessonId]);
 
       if (!access) {
-        res.status(403).json({ message: 'คุณไม่มีสิทธิ์บันทึกความคืบหน้าของบทเรียนนี้' });
+        res.status(404).json({ message: 'ไม่พบบทเรียนหรือบทเรียนยังไม่เปิดใช้งาน' });
         return;
       }
 

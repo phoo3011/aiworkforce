@@ -47,8 +47,7 @@ async function seed() {
     console.log(`Students loaded from private CSV: ${emails.length}`);
     console.log(`Existing students preserved: ${studentCount.count}`);
     console.log(`Courses available: ${courseCount.count}`);
-    console.log('No course access was assigned automatically.');
-    console.log('Use import-enrollments.js with a private CSV file to assign access.');
+    console.log('Active students can access every active course.');
   } finally {
     await database.close();
   }

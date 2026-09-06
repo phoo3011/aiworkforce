@@ -6,7 +6,6 @@ aiworkforce-backend/node_modules/
 aiworkforce-backend/serviceAccountKey.json
 aiworkforce-backend/database.sqlite
 aiworkforce-backend/.env
-aiworkforce-backend/enrollments.csv
 aiworkforce-backend/course-content.json
 aiworkforce-backend/students.csv
 
