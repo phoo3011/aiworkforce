@@ -5,6 +5,9 @@ aiworkforce-backend/node_modules/
 # Secrets and Databases (CRITICAL: DO NOT COMMIT)
 aiworkforce-backend/serviceAccountKey.json
 aiworkforce-backend/database.sqlite
+aiworkforce-backend/.env
+aiworkforce-backend/course-content.json
+aiworkforce-backend/students.csv
 
 # System and Log files
 .DS_Store

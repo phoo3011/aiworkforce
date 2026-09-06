@@ -61,6 +61,17 @@
   }
   .logos img{height:34px; width:auto; display:block;}
   .logos a:has(img){display:flex; align-items:center; text-decoration:none;}
+  .btn-learning-nav{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    padding:8px 16px; border:1px solid var(--amber); border-radius:100px;
+    color:var(--amber-soft); background:rgba(245,130,31,0.1);
+    font-size:0.82rem; font-weight:700; text-decoration:none;
+    transition:transform .18s ease, background .18s ease;
+  }
+  .btn-learning-nav:hover{transform:translateY(-2px); background:rgba(245,130,31,0.2);}
+  .btn-learning-nav.is-disabled, .btn.lesson-unavailable.is-disabled, .mode-pill.lesson-unavailable.is-disabled{
+    opacity:.56; cursor:not-allowed; pointer-events:none;
+  }
   .hero-grid{
     position:relative;
     display:grid;
@@ -305,6 +316,9 @@
     font-size:0.72rem; font-weight:700; padding:5px 14px; border-radius:100px;
     white-space:nowrap;
   }
+  .mode-pill.lesson-access{cursor:pointer; text-decoration:none; transition:transform .18s ease, box-shadow .18s ease;}
+  .mode-pill.lesson-access:hover{transform:translateY(-1px); box-shadow:0 5px 12px -5px rgba(245,130,31,.9);}
+  .curric-table .mode-pill:not(.lesson-access){opacity:.52; cursor:not-allowed; filter:saturate(.7);}
   .curric-table thead td:nth-child(4), .curric-table tbody td:nth-child(4){width:120px; text-align:right;}
 
   /* color themes per track */
@@ -565,7 +579,8 @@
 <section class="hero">
   <div class="logos">
     <a href="index.html"><img src="images/partner-logos.png" alt="PMU-B, CMU, CAMT, dii, DITC, AiAT"></a>
-    <div style="margin-left:auto; display:flex; gap:12px; align-items:center;">
+    <div style="margin-left:auto; display:flex; gap:12px; align-items:center; flex-wrap:wrap; justify-content:flex-end;">
+      <a class="btn-learning-nav" href="lesson.html?course=ai-developer&amp;lessonOrder=1"><i class="fa-solid fa-play" aria-hidden="true"></i> วิดีโอ AI Developer Trainer</a>
       <a href="ai-marketing.html" style="color:var(--amber-soft); text-decoration:none; border:1px solid var(--line); padding:6px 14px; border-radius:100px; font-family:'IBM Plex Mono',monospace; font-size:0.72rem;">สาย Marketing →</a>
       <button class="btn-login-nav" onclick="openAuthModal()">Login</button>
     </div>
@@ -586,6 +601,7 @@
         <a class="btn btn-primary" href="https://docs.google.com/forms/d/e/1FAIpQLSc3-MZvEeWD0tDkmPyx9K5VR8dCAzjK3cwzMsK2wqrkh-Kyzw/viewform" target="_blank" rel="noopener">
           สมัครเรียนตอนนี้ →
         </a>
+        <a class="btn btn-ghost" href="lesson.html?course=ai-developer&amp;lessonOrder=1"><i class="fa-solid fa-play" aria-hidden="true"></i> ดูวิดีโอ AI Developer Trainer</a>
         <a class="btn btn-ghost" href="#tracks">ดูรายละเอียดหลักสูตร</a>
       </div>
     </div>
@@ -739,7 +755,7 @@
     <table class="curric-table">
       <thead><tr><th>Session</th><th>ชั่วโมง</th><th>หัวข้อ</th><th></th></tr></thead>
       <tbody>
-        <tr><td>Task Specific Lecture + Lab</td><td>3</td><td>Vibe Code + UXUI</td><td><span class="mode-pill">Lecture + Lab</span></td></tr>
+        <tr><td>Task Specific Lecture + Lab</td><td>3</td><td>Vibe Code + UXUI</td><td><a class="mode-pill lesson-access" href="lesson.html?course=ai-developer&amp;lessonOrder=1"><i class="fa-solid fa-play" aria-hidden="true"></i> ดูบทเรียน</a></td></tr>
         <tr><td>Task Specific Lecture + Lab</td><td>3</td><td>LLM Concept</td><td><span class="mode-pill">Lecture + Lab</span></td></tr>
         <tr><td>Task Specific Lecture + Lab</td><td>3</td><td>LLM Evaluation</td><td><span class="mode-pill">Lecture + Lab</span></td></tr>
         <tr><td>Task Specific Lecture + Lab</td><td>4</td><td>Vibe Code + DB</td><td><span class="mode-pill">Lecture + Lab</span></td></tr>
@@ -1031,6 +1047,7 @@
   </div>
 </footer>
 
+<script src="site-config.js"></script>
 <script type="module" src="auth.js"></script>
 </body>
 </html>

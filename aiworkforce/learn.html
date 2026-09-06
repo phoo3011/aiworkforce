@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>บทเรียนของฉัน | AI Workforce</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="auth.css">
+  <link rel="stylesheet" href="learn.css">
+</head>
+<body>
+  <header class="learning-header">
+    <a href="index.html"><img src="images/partner-logos.png" alt="AI Workforce"></a>
+    <div class="learning-header-actions">
+      <a class="back-link" href="index.html">← กลับหน้าหลัก</a>
+      <button class="btn-login-nav" type="button" onclick="window.openAuthModal()">Login</button>
+    </div>
+  </header>
+
+  <main class="learning-shell">
+    <span class="learning-kicker">LEARNING DASHBOARD</span>
+    <h1 class="learning-title" id="dashboard-title">บทเรียนของฉัน</h1>
+    <p class="learning-intro" id="dashboard-intro">เลือกหลักสูตรที่เปิดให้เรียนเพื่อดูวิดีโอ แบบทดสอบ และความคืบหน้าของคุณ</p>
+    <a class="all-courses-link" id="all-courses-link" href="learn.html" hidden>← ดูทุกหลักสูตร</a>
+    <div class="learner-chip"><i class="fa-regular fa-user" aria-hidden="true"></i><span id="learner-email">กำลังตรวจสอบบัญชี…</span></div>
+
+    <div class="status-panel" id="dashboard-status">กำลังโหลดหลักสูตรและบทเรียน…</div>
+    <section class="course-grid" id="course-grid" aria-live="polite"></section>
+  </main>
+
+  <script src="site-config.js"></script>
+  <script type="module" src="learn.js"></script>
+</body>
+</html>
