@@ -116,9 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <button class="auth-close" type="button" aria-label="ปิด" onclick="window.closeAuthModal()">×</button>
         <h2 class="auth-heading">บัญชีของฉัน</h2>
         <p class="user-info">เข้าสู่ระบบด้วย <span id="user-email-display" class="user-email"></span></p>
-        <a class="auth-btn btn-learning" href="learn.html">
-          <i class="fa-solid fa-graduation-cap" aria-hidden="true"></i> เข้าสู่บทเรียนของฉัน
-        </a>
+
         <button id="btn-logout" class="auth-btn btn-logout" type="button">ออกจากระบบ</button>
       </div>
     </div>
@@ -136,7 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const icon = document.createElement('i');
         icon.className = 'fa-regular fa-user';
         icon.setAttribute('aria-hidden', 'true');
-        button.append(icon, document.createTextNode(` ${email}`));
+        button.append(icon, document.createTextNode(email));
       } else {
         button.textContent = 'Login';
       }

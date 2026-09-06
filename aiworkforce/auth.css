@@ -66,6 +66,7 @@
   cursor: pointer;
   transition: background-color 0.2s, transform 0.1s;
   text-decoration: none;
+  font-family: inherit;
 }
 .btn-learning {
   background: #0d9488;
@@ -109,6 +110,7 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    gap: 8px;
     background-color: var(--amber, #f5821f);
     color: var(--navy-deep, #04221f);
     font-size: 0.95rem;
