@@ -61,6 +61,14 @@
   }
   .logos img{height:34px; width:auto; display:block;}
   .logos a:has(img){display:flex; align-items:center; text-decoration:none;}
+  .btn-learning-nav{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    padding:8px 16px; border:1px solid rgba(255,255,255,0.65); border-radius:100px;
+    color:#fff; background:rgba(58,31,12,0.16);
+    font-size:0.82rem; font-weight:700; text-decoration:none;
+    transition:transform .18s ease, background .18s ease;
+  }
+  .btn-learning-nav:hover{transform:translateY(-2px); background:rgba(58,31,12,0.28);}
   .hero-grid{
     position:relative;
     display:grid;
@@ -320,6 +328,8 @@
     font-size:0.72rem; font-weight:700; padding:5px 14px; border-radius:100px;
     white-space:nowrap;
   }
+  .mode-pill.lesson-access{cursor:pointer; text-decoration:none; transition:transform .18s ease, box-shadow .18s ease;}
+  .mode-pill.lesson-access:hover{transform:translateY(-1px); box-shadow:0 5px 12px -5px rgba(196,94,24,.9);}
   .curric-table thead td:nth-child(4), .curric-table tbody td:nth-child(4){width:120px; text-align:right;}
 
   /* color themes per track */
@@ -577,7 +587,8 @@
 <section class="hero">
   <div class="logos">
     <a href="index.html"><img src="images/partner-logos.png" alt="PMU-B, CMU, CAMT, dii, DITC, AiAT"></a>
-    <div style="margin-left:auto; display:flex; gap:12px; align-items:center;">
+    <div style="margin-left:auto; display:flex; gap:12px; align-items:center; flex-wrap:wrap; justify-content:flex-end;">
+      <a class="btn-learning-nav" href="learn.html?course=ai-marketing"><i class="fa-solid fa-play" aria-hidden="true"></i> เรียนคอร์สนี้</a>
       <a href="ai-developer.html" style="color:#fff; text-decoration:none; border:1px solid rgba(255,255,255,0.45); padding:6px 14px; border-radius:100px; font-family:'IBM Plex Mono',monospace; font-size:0.72rem;">สาย Developer <i class="fa-solid fa-arrow-right"></i></a>
       <button class="btn-login-nav" onclick="openAuthModal()">Login</button>
     </div>
@@ -595,6 +606,7 @@
         <a class="btn btn-primary" href="https://docs.google.com/forms/d/e/1FAIpQLSc3-MZvEeWD0tDkmPyx9K5VR8dCAzjK3cwzMsK2wqrkh-Kyzw/viewform" target="_blank" rel="noopener">
           สมัครเรียนตอนนี้ <i class="fa-solid fa-arrow-right"></i>
         </a>
+        <a class="btn btn-ghost" href="learn.html?course=ai-marketing"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i> เข้าสู่บทเรียนคอร์สนี้</a>
         <a class="btn btn-ghost" href="#tracks">ดูรายละเอียดหลักสูตร</a>
       </div>
       <div class="hero-meta">
@@ -708,7 +720,7 @@
     <table class="curric-table">
       <thead><tr><th>Session</th><th>ชั่วโมง</th><th></th></tr></thead>
       <tbody>
-        <tr><td>Intro to AI, Literacy</td><td>3</td><td><span class="mode-pill">Foundation</span></td></tr>
+        <tr><td>Intro to AI, Literacy</td><td>3</td><td><a class="mode-pill lesson-access" href="lesson.html?course=ai-developer&amp;lessonOrder=1">ดูบทเรียน</a></td></tr>
         <tr><td>Prompt, NotebookLM</td><td>3</td><td><span class="mode-pill">Foundation</span></td></tr>
         <tr><td>Design Thinking + AI Transformation</td><td>3</td><td><span class="mode-pill">Foundation</span></td></tr>
         <tr><td>Ethics, Governance, Responsible, Right</td><td>3</td><td><span class="mode-pill">Foundation</span></td></tr>

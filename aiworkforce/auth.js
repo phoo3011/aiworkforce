@@ -189,6 +189,7 @@ document.addEventListener('DOMContentLoaded', () => {
   onAuthStateChanged(auth, async (user) => {
     if (!user) {
       showSignedOut();
+      window.dispatchEvent(new CustomEvent('aiworkforce:auth-changed', { detail: null }));
       return;
     }
 

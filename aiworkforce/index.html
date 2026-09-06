@@ -65,6 +65,14 @@
   .logos img{height:34px; width:auto; display:block; max-width:100%;}
   .logos a:has(img){display:flex; align-items:center; text-decoration:none;}
   .logos .aiat-header{height:44px;}
+  .btn-learning-nav{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    padding:8px 18px; border:1px solid var(--amber); border-radius:100px;
+    color:var(--amber-soft); background:rgba(245,130,31,0.1);
+    font-size:0.88rem; font-weight:700; text-decoration:none;
+    transition:transform .18s ease, background .18s ease;
+  }
+  .btn-learning-nav:hover{transform:translateY(-2px); background:rgba(245,130,31,0.2);}
   .hero-grid{
     position:relative;
     text-align:center;
@@ -475,7 +483,10 @@
 <section class="hero">
   <div class="logos">
     <a href="index.html"><img src="images/partner-logos.png" alt="PMU-B, CMU, CAMT, dii, DITC, AiAT"></a>
-    <button class="btn-login-nav" onclick="openAuthModal()">Login</button>
+    <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
+      <a class="btn-learning-nav" href="learn.html"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i> คลาสเรียนของฉัน</a>
+      <button class="btn-login-nav" onclick="openAuthModal()">Login</button>
+    </div>
   </div>
 
   <div class="hero-grid">

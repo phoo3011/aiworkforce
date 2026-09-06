@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>บทเรียน | AI Workforce</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="auth.css">
+  <link rel="stylesheet" href="learn.css">
+</head>
+<body>
+  <header class="learning-header">
+    <a href="index.html"><img src="images/partner-logos.png" alt="AI Workforce"></a>
+    <div class="learning-header-actions">
+      <a class="back-link" href="learn.html">← บทเรียนของฉัน</a>
+      <button class="btn-login-nav" type="button" onclick="window.openAuthModal()">Login</button>
+    </div>
+  </header>
+
+  <main class="learning-shell">
+    <span class="learning-kicker" id="course-title">COURSE</span>
+    <h1 class="learning-title" id="lesson-title">กำลังโหลดบทเรียน…</h1>
+    <p class="learning-intro" id="lesson-description"></p>
+
+    <div class="status-panel" id="lesson-status">กำลังตรวจสอบสิทธิ์…</div>
+    <section class="lesson-layout" id="lesson-content" hidden>
+      <article class="video-card">
+        <div class="video-frame"><div id="youtube-player"></div></div>
+      </article>
+      <aside class="test-panel">
+        <h2>แบบทดสอบและกิจกรรม</h2>
+        <p class="test-help">ผลแบบทดสอบเก็บใน Google Forms แยกจากความคืบหน้าบนเว็บไซต์ในรอบแรก</p>
+        <div id="test-list"></div>
+      </aside>
+    </section>
+  </main>
+
+  <script src="site-config.js"></script>
+  <script type="module" src="lesson.js"></script>
+</body>
+</html>
