@@ -69,6 +69,9 @@
     transition:transform .18s ease, background .18s ease;
   }
   .btn-learning-nav:hover{transform:translateY(-2px); background:rgba(58,31,12,0.28);}
+  .btn-learning-nav.is-disabled, .btn.lesson-unavailable.is-disabled, .mode-pill.lesson-unavailable.is-disabled{
+    opacity:.56; cursor:not-allowed; pointer-events:none;
+  }
   .hero-grid{
     position:relative;
     display:grid;
@@ -330,6 +333,7 @@
   }
   .mode-pill.lesson-access{cursor:pointer; text-decoration:none; transition:transform .18s ease, box-shadow .18s ease;}
   .mode-pill.lesson-access:hover{transform:translateY(-1px); box-shadow:0 5px 12px -5px rgba(196,94,24,.9);}
+  .curric-table .mode-pill:not(.lesson-access){opacity:.52; cursor:not-allowed; filter:saturate(.7);}
   .curric-table thead td:nth-child(4), .curric-table tbody td:nth-child(4){width:120px; text-align:right;}
 
   /* color themes per track */
@@ -588,7 +592,7 @@
   <div class="logos">
     <a href="index.html"><img src="images/partner-logos.png" alt="PMU-B, CMU, CAMT, dii, DITC, AiAT"></a>
     <div style="margin-left:auto; display:flex; gap:12px; align-items:center; flex-wrap:wrap; justify-content:flex-end;">
-      <a class="btn-learning-nav" href="learn.html?course=ai-marketing"><i class="fa-solid fa-play" aria-hidden="true"></i> เรียนคอร์สนี้</a>
+      <span class="btn-learning-nav is-disabled" aria-disabled="true" title="ยังไม่มีวิดีโอ AI Marketing เผยแพร่"><i class="fa-solid fa-clock" aria-hidden="true"></i> วิดีโอยังไม่พร้อม</span>
       <a href="ai-developer.html" style="color:#fff; text-decoration:none; border:1px solid rgba(255,255,255,0.45); padding:6px 14px; border-radius:100px; font-family:'IBM Plex Mono',monospace; font-size:0.72rem;">สาย Developer <i class="fa-solid fa-arrow-right"></i></a>
       <button class="btn-login-nav" onclick="openAuthModal()">Login</button>
     </div>
@@ -606,7 +610,7 @@
         <a class="btn btn-primary" href="https://docs.google.com/forms/d/e/1FAIpQLSc3-MZvEeWD0tDkmPyx9K5VR8dCAzjK3cwzMsK2wqrkh-Kyzw/viewform" target="_blank" rel="noopener">
           สมัครเรียนตอนนี้ <i class="fa-solid fa-arrow-right"></i>
         </a>
-        <a class="btn btn-ghost" href="learn.html?course=ai-marketing"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i> เข้าสู่บทเรียนคอร์สนี้</a>
+        <span class="btn btn-ghost lesson-unavailable is-disabled" aria-disabled="true" title="ยังไม่มีวิดีโอ AI Marketing เผยแพร่"><i class="fa-solid fa-clock" aria-hidden="true"></i> วิดีโอยังไม่พร้อม</span>
         <a class="btn btn-ghost" href="#tracks">ดูรายละเอียดหลักสูตร</a>
       </div>
       <div class="hero-meta">
@@ -720,7 +724,7 @@
     <table class="curric-table">
       <thead><tr><th>Session</th><th>ชั่วโมง</th><th></th></tr></thead>
       <tbody>
-        <tr><td>Intro to AI, Literacy</td><td>3</td><td><a class="mode-pill lesson-access" href="lesson.html?course=ai-developer&amp;lessonOrder=1">ดูบทเรียน</a></td></tr>
+        <tr><td>Intro to AI, Literacy</td><td>3</td><td><span class="mode-pill">Foundation</span></td></tr>
         <tr><td>Prompt, NotebookLM</td><td>3</td><td><span class="mode-pill">Foundation</span></td></tr>
         <tr><td>Design Thinking + AI Transformation</td><td>3</td><td><span class="mode-pill">Foundation</span></td></tr>
         <tr><td>Ethics, Governance, Responsible, Right</td><td>3</td><td><span class="mode-pill">Foundation</span></td></tr>
