@@ -1,7 +1,7 @@
 # AI Workforce
 
 เว็บไซต์ประชาสัมพันธ์และพื้นที่เรียนสำหรับโครงการ AI Workforce ประกอบด้วย frontend แบบ static,
-Firebase Authentication และ Express/SQLite API สำหรับตรวจสิทธิ์รายหลักสูตร
+Firebase Authentication และ Express/SQLite API สำหรับตรวจสิทธิ์ผู้เรียนทั้งแพลตฟอร์ม
 
 ## โครงสร้าง
 
@@ -23,24 +23,14 @@ npm start
 ```
 
 `npm run seed` จะอ่านรายชื่อเดิมจาก `aiworkforce-backend/students.csv` หากไฟล์มีอยู่
-ไฟล์นี้เป็นข้อมูลส่วนตัวและถูก ignore ไว้ จึงไม่ถูกส่งขึ้น Git รายชื่อจะถูกเพิ่มเป็นผู้ชำระแล้ว
-แต่จะยังไม่ถูกผูกกับหลักสูตรใด
+ไฟล์นี้เป็นข้อมูลส่วนตัวและถูก ignore ไว้ จึงไม่ถูกส่งขึ้น Git รายชื่อจะถูกเพิ่มหรือเปิดใช้งานเป็นผู้เรียน
+และเข้าถึงได้ทุกหลักสูตรที่เปิดใช้งาน
 
 เปิด frontend ด้วย static server ที่ port 5500 เช่น Live Server แล้วเปิด
 `http://localhost:5500/aiworkforce/`
 
 การตั้งค่า environment, Firebase credential และไฟล์ข้อมูล private จะส่งให้ผู้ดูแลระบบแยกต่างหาก
 และไม่เก็บไว้ใน repository นี้
-
-## นำเข้าสิทธิ์รายหลักสูตร
-
-เมื่อได้รับไฟล์สิทธิ์รายหลักสูตรจากผู้ดูแล ให้รัน:
-
-```powershell
-npm run import:enrollments -- enrollments.csv
-```
-
-ไฟล์จริงถูก ignore และจะไม่ถูก commit ระบบจะไม่กำหนดสิทธิ์ให้รายชื่อเดิมอัตโนมัติ
 
 ## นำเข้าบทเรียนและ checkpoint
 

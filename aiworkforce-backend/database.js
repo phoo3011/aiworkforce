@@ -116,18 +116,6 @@ async function initializeDatabase(database) {
       updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
     );
 
-    CREATE TABLE IF NOT EXISTS enrollments (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      student_id INTEGER NOT NULL,
-      course_id INTEGER NOT NULL,
-      status TEXT NOT NULL DEFAULT 'active',
-      granted_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
-      expires_at TEXT,
-      UNIQUE(student_id, course_id),
-      FOREIGN KEY(student_id) REFERENCES students(id) ON DELETE CASCADE,
-      FOREIGN KEY(course_id) REFERENCES courses(id) ON DELETE CASCADE
-    );
-
     CREATE TABLE IF NOT EXISTS lessons (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       course_id INTEGER NOT NULL,
@@ -169,7 +157,6 @@ async function initializeDatabase(database) {
       FOREIGN KEY(checkpoint_id) REFERENCES checkpoints(id) ON DELETE CASCADE
     );
 
-    CREATE INDEX IF NOT EXISTS idx_enrollments_student ON enrollments(student_id, status);
     CREATE INDEX IF NOT EXISTS idx_lessons_course_order ON lessons(course_id, lesson_order);
     CREATE INDEX IF NOT EXISTS idx_progress_student_lesson ON progress(student_id, lesson_id);
 
