@@ -1,0 +1,21 @@
+{
+  "hosting": {
+    "public": "aiworkforce",
+    "headers": [
+      {
+        "source": "/site-config.js",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-cache"
+          }
+        ]
+      }
+    ],
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}

@@ -1,0 +1,9 @@
+node_modules
+npm-debug.log
+.env
+deploy.env
+serviceAccountKey.json
+database.sqlite
+students.csv
+course-content.json
+*.log

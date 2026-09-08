@@ -34,7 +34,7 @@ npm start
 
 ## นำเข้าบทเรียนและ checkpoint
 
-เมื่อได้รับไฟล์ข้อมูลบทเรียนที่มี YouTube video ID, Google Form URL และเวลาของกิจกรรม ให้รัน:
+เมื่อได้รับไฟล์ข้อมูลบทเรียนที่มี YouTube video ID, ลิงก์สไลด์ Google Drive, Google Form URL และเวลาของกิจกรรม ให้รัน:
 
 ```powershell
 npm run import:content -- course-content.json
@@ -48,6 +48,25 @@ npm run import:content -- course-content.json
 
 Google Forms ยังไม่ส่งผลคะแนนกลับมาที่เว็บไซต์ใน MVP นี้
 
+บทเรียนหนึ่งบทต้องมีวิดีโอหรือเอกสารอย่างน้อยหนึ่งรายการ และสามารถใส่สไลด์หลายไฟล์ได้:
+
+```json
+{
+  "title": "ชื่อบทเรียน",
+  "order": 1,
+  "youtubeVideoId": "optional-video-id",
+  "materials": [
+    {
+      "title": "สไลด์ประกอบการเรียน",
+      "url": "https://drive.google.com/file/d/.../view"
+    }
+  ]
+}
+```
+
+ลิงก์เอกสารอยู่ใน `course-content.json` ซึ่งเป็นไฟล์ private ที่ถูก ignore และหน้าเรียนจะแสดง
+เฉพาะหลังผู้เรียนผ่านการเข้าสู่ระบบแล้ว ไฟล์จริงควรอยู่ใน Google Drive แบบ Restricted ตามสิทธิ์ที่ผู้ดูแลกำหนด
+
 ## Production configuration
 
 Frontend อ่าน API URL จาก `aiworkforce/site-config.js` ค่า production เริ่มต้นคือ
@@ -56,6 +75,27 @@ Frontend อ่าน API URL จาก `aiworkforce/site-config.js` ค่า p
 ควรกำหนด `ALLOWED_ORIGINS` เฉพาะโดเมนจริง และเก็บ Firebase credential ใน secret manager
 ของ hosting provider
 
+## Deploy backend ก่อนเชื่อมโดเมน
+
+มี Docker configuration ใน `aiworkforce-backend/` สำหรับนำ API ขึ้น server ร่วมกับบริการอื่น
+โดย API จะฟังเฉพาะ `127.0.0.1:5002` จึงยังไม่เปิดสู่สาธารณะจนกว่า Nginx และ DNS ของโดเมนจริง
+จะพร้อม
+
+บน server ให้เก็บ Firebase Admin service account นอก repository แล้วคัดลอกไฟล์ตัวอย่าง:
+
+```bash
+cd /opt/aiworkforce/app/aiworkforce-backend
+cp deploy.env.example deploy.env
+mkdir -p /opt/aiworkforce/secrets
+chmod 700 /opt/aiworkforce/secrets
+chmod 600 /opt/aiworkforce/secrets/firebase-service-account.json
+docker compose --env-file deploy.env up -d --build
+curl http://127.0.0.1:5002/api/health
+```
+
+ห้ามใส่ Firebase service-account JSON, `deploy.env`, SQLite database, รายชื่อผู้เรียน หรือไฟล์เนื้อหา
+ลง Git เมื่อผู้ดูแลสาขาให้ชื่อ API domain แล้ว จึงเพิ่ม Nginx virtual host, ออก HTTPS certificate
+และเปลี่ยน `ALLOWED_ORIGINS` กับ `aiworkforce/site-config.js` ให้ตรงกับชื่อจริง
 ## ทดสอบ
 
 ```powershell

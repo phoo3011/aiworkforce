@@ -1,0 +1,37 @@
+services:
+  api:
+    build:
+      context: .
+    image: aiworkforce-api:local
+    restart: unless-stopped
+    init: true
+    ports:
+      # The API is intentionally private; Nginx will proxy the public hostname later.
+      - "127.0.0.1:${API_PORT:-5002}:5000"
+    environment:
+      DATABASE_PATH: /data/database.sqlite
+      FIREBASE_SERVICE_ACCOUNT_PATH: /run/secrets/firebase-service-account.json
+      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS}
+    volumes:
+      - aiworkforce-data:/data
+      - ${FIREBASE_SERVICE_ACCOUNT_HOST_PATH}:/run/secrets/firebase-service-account.json:ro
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - "fetch('http://127.0.0.1:5000/api/health').then((response) => process.exit(response.ok ? 0 : 1)).catch(() => process.exit(1))"
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+
+volumes:
+  aiworkforce-data:

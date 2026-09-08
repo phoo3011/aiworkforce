@@ -6,11 +6,13 @@ aiworkforce-backend/node_modules/
 aiworkforce-backend/serviceAccountKey.json
 aiworkforce-backend/database.sqlite
 aiworkforce-backend/.env
+aiworkforce-backend/deploy.env
 aiworkforce-backend/course-content.json
 aiworkforce-backend/students.csv
 
 # System and Log files
 .DS_Store
+.firebase/
 *.log
 npm-debug.log*
 yarn-debug.log*

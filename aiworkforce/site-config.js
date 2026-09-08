@@ -2,7 +2,7 @@
   const localHosts = new Set(['localhost', '127.0.0.1']);
   const defaultApiBaseUrl = localHosts.has(window.location.hostname)
     ? 'http://localhost:5000'
-    : 'https://api.aiworkforcedev.online';
+    : 'https://api.aiworkforce.turnpro.dev';
 
   window.AI_WORKFORCE_CONFIG = Object.freeze({
     apiBaseUrl: window.AI_WORKFORCE_CONFIG?.apiBaseUrl || defaultApiBaseUrl
