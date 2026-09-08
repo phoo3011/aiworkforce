@@ -132,3 +132,10 @@
 div.swal2-container {
   z-index: 10000 !important;
 }
+
+/* Hide learning elements when not logged in */
+body:not(.logged-in) .btn-learning-nav,
+body:not(.logged-in) .lesson-access,
+body:not(.logged-in) .lesson-unavailable {
+  display: none !important;
+}

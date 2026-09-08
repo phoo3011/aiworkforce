@@ -146,6 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
     profileSection.style.display = 'none';
     emailDisplay.textContent = '';
     setNavUser('');
+    document.body.classList.remove('logged-in');
   }
 
   function showSignedIn(email) {
@@ -153,6 +154,7 @@ document.addEventListener('DOMContentLoaded', () => {
     profileSection.style.display = 'block';
     emailDisplay.textContent = email;
     setNavUser(email);
+    document.body.classList.add('logged-in');
   }
 
   async function beginPopupLogin(provider) {
