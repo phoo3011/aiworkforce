@@ -49,8 +49,8 @@ async function startServer() {
   });
 
   const port = Number(process.env.PORT) || 5000;
-  const server = app.listen(port, () => {
-    console.log(`AI Workforce API listening on port ${port}`);
+  const server = app.listen(port, '0.0.0.0', () => {
+    console.log(`AI Workforce API listening on port ${port} (0.0.0.0)`);
     console.log(`Database: ${database.databasePath}`);
   });
 
