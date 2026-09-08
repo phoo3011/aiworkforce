@@ -11,7 +11,7 @@ import Swal from 'https://cdn.jsdelivr.net/npm/sweetalert2@11/+esm';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyAoaNtLUmoqJJERrERyj6779U0HqroEjoo',
-  authDomain: 'project---aiworkforce.firebaseapp.com',
+  authDomain: 'aiworkforce.turnpro.dev',
   projectId: 'project---aiworkforce',
   storageBucket: 'project---aiworkforce.firebasestorage.app',
   messagingSenderId: '260846006624',
