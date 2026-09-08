@@ -8,7 +8,9 @@ function parseAllowedOrigins(value) {
     'http://localhost:8080',
     'http://127.0.0.1:8080',
     'https://aiworkforcedev.online',
-    'https://www.aiworkforcedev.online'
+    'https://www.aiworkforcedev.online',
+    'https://aiworkforce.turnpro.dev',
+    'http://aiworkforce.turnpro.dev'
   ].join(','))
     .split(',')
     .map((origin) => origin.trim())

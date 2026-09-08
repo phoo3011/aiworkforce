@@ -1,5 +1,5 @@
 (function configureAiWorkforce() {
-  const localHosts = new Set(['localhost', '127.0.0.1']);
+  const localHosts = new Set(['localhost', '127.0.0.1', 'aiworkforce.turnpro.dev']);
   const defaultApiBaseUrl = localHosts.has(window.location.hostname)
     ? 'http://localhost:5000'
     : 'https://api.aiworkforcedev.online';

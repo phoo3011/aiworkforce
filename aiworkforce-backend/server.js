@@ -9,6 +9,17 @@ const { initializeDatabase, openDatabase } = require('./database');
 function initializeFirebaseAdmin() {
   if (getApps().length > 0) return;
 
+  const envJson = process.env.FIREBASE_SERVICE_ACCOUNT_JSON;
+  if (envJson) {
+    try {
+      const serviceAccount = JSON.parse(envJson);
+      initializeApp({ credential: cert(serviceAccount) });
+      return;
+    } catch (e) {
+      console.warn("Failed to parse FIREBASE_SERVICE_ACCOUNT_JSON environment variable.", e.message);
+    }
+  }
+
   const configuredCredentialPath = process.env.FIREBASE_SERVICE_ACCOUNT_PATH;
   const credentialPath = configuredCredentialPath
     ? (path.isAbsolute(configuredCredentialPath)
