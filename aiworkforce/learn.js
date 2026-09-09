@@ -29,7 +29,12 @@ function lessonState(lesson) {
 
 function renderCourse(course, lessons) {
   const panel = createElement('article', 'course-panel');
-  const head = createElement('header', `course-head${course.slug === 'ai-marketing' ? ' marketing' : ''}`);
+  let colorClass = '';
+  if (course.slug === 'ai-marketing' || course.slug === 'core-ai-foundation') {
+    colorClass = ' foundation';
+  }
+  
+  const head = createElement('header', `course-head${colorClass}`);
   head.append(
     createElement('h2', '', course.title),
     createElement('p', '', course.description || 'หลักสูตรที่พร้อมให้เรียน')

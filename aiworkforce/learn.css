@@ -87,7 +87,7 @@ body {
   box-shadow: 0 16px 45px -36px rgba(4, 34, 31, 0.55);
 }
 .course-head { padding: 26px 28px; background: linear-gradient(135deg, #07342f, #0d655c); color: #fff; }
-.course-head.marketing { background: linear-gradient(135deg, #6b300c, #dd6d1b); }
+.course-head.foundation { background: linear-gradient(135deg, #6b300c, #dd6d1b); }
 .course-head h2 { margin: 0 0 8px; font-size: 1.45rem; }
 .course-head p { margin: 0; color: rgba(255,255,255,.78); font-size: .9rem; line-height: 1.6; }
 .progress-copy { margin-top: 13px; color: var(--learn-mint); font: 500 .78rem 'IBM Plex Mono', monospace; }
