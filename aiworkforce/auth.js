@@ -86,6 +86,32 @@ function friendlyAuthError(error) {
 document.addEventListener('DOMContentLoaded', () => {
   if (document.getElementById('auth-modal')) return;
 
+  // Auto-update lesson icons based on syllabus
+  fetch(`${getApiBaseUrl()}/api/public/syllabus`)
+    .then(res => res.json())
+    .then(data => {
+      const syllabus = data.syllabus || [];
+      document.querySelectorAll('a.lesson-access').forEach(a => {
+        try {
+          const url = new URL(a.href, window.location.origin);
+          const course = url.searchParams.get('course');
+          const lessonOrder = Number(url.searchParams.get('lessonOrder'));
+          const lessonData = syllabus.find(s => s.courseSlug === course && s.lessonOrder === lessonOrder);
+          
+          if (lessonData) {
+            const icon = a.querySelector('i');
+            if (icon) {
+              // Update icon: Play for video, File for document
+              icon.className = lessonData.hasVideo ? 'fa-solid fa-play' : 'fa-solid fa-file-lines';
+            }
+          }
+        } catch (e) {
+          // Ignore invalid URLs
+        }
+      });
+    })
+    .catch(err => console.error('Failed to load syllabus icons:', err));
+
   document.body.insertAdjacentHTML('beforeend', `
     <div class="auth-overlay" id="auth-modal" role="dialog" aria-modal="true" aria-labelledby="auth-title">
       <div id="login-container" class="auth-wrapper">

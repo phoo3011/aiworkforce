@@ -82,6 +82,21 @@ function createApp({ database, verifyIdToken, allowedOrigins, rateLimitOptions }
     }
   });
 
+  app.get('/api/public/syllabus', async (req, res, next) => {
+    try {
+      const data = await database.all(`
+        SELECT c.slug AS courseSlug, l.lesson_order AS lessonOrder,
+               CASE WHEN l.youtube_video_id IS NOT NULL AND l.youtube_video_id != '' THEN 1 ELSE 0 END AS hasVideo
+        FROM lessons l
+        JOIN courses c ON c.id = l.course_id AND c.active = 1
+        WHERE l.active = 1
+      `);
+      res.json({ syllabus: data });
+    } catch (error) {
+      next(error);
+    }
+  });
+
   async function authenticate(req, res, next) {
     const authorization = req.get('authorization') || '';
     const bearerMatch = authorization.match(/^Bearer\s+(.+)$/i);
