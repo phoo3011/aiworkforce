@@ -26,9 +26,17 @@
 
     <div class="status-panel" id="lesson-status">กำลังตรวจสอบสิทธิ์…</div>
     <section class="lesson-layout" id="lesson-content" hidden>
-      <article class="video-card">
-        <div class="video-frame"><div id="youtube-player"></div></div>
-      </article>
+      <div class="lesson-primary">
+        <article class="video-card" id="video-card">
+          <div class="video-frame"><div id="youtube-player"></div></div>
+        </article>
+        <p class="video-unavailable" id="video-unavailable" hidden>วิดีโอยังไม่เผยแพร่ ขณะนี้สามารถอ่านเอกสารประกอบได้</p>
+        <section class="materials-panel" id="materials-panel" hidden>
+          <h2>เอกสารประกอบ</h2>
+          <p>เปิดสไลด์ PDF ใน Google Drive เพื่ออ่านเนื้อหาประกอบบทเรียน</p>
+          <div id="materials-list"></div>
+        </section>
+      </div>
       <aside class="test-panel">
         <h2>แบบทดสอบและกิจกรรม</h2>
         <p class="test-help">ผลแบบทดสอบเก็บใน Google Forms แยกจากความคืบหน้าบนเว็บไซต์ในรอบแรก</p>
@@ -37,7 +45,7 @@
     </section>
   </main>
 
-  <script src="site-config.js"></script>
+  <script src="site-config.js?v=20260908-1"></script>
   <script type="module" src="lesson.js"></script>
 </body>
 </html>

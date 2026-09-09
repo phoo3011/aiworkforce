@@ -9,6 +9,40 @@ function validateHttpsUrl(value, label) {
   return parsed.toString();
 }
 
+function normalizeMaterials(value, lessonSlug) {
+  if (value == null) return [];
+  if (!Array.isArray(value)) throw new Error(`Materials for lesson '${lessonSlug}' must be an array.`);
+
+  return value.map((material, index) => {
+    const title = String(material?.title || '').trim();
+    if (!title) throw new Error(`Material ${index + 1} for lesson '${lessonSlug}' needs a title.`);
+    return {
+      title,
+      url: validateHttpsUrl(material?.url, `Material URL for '${title}'`),
+      order: index + 1
+    };
+  });
+}
+
+function normalizeLessonInput(lessonInput, courseSlug) {
+  const lessonSlug = String(lessonInput.slug || '').trim().toLowerCase();
+  const lessonOrder = Number(lessonInput.order);
+  const youtubeVideoId = String(lessonInput.youtubeVideoId || '').trim();
+  const materials = normalizeMaterials(lessonInput.materials, lessonSlug || 'unknown');
+
+  if (
+    !lessonSlug
+    || !lessonInput.title
+    || !Number.isInteger(lessonOrder)
+    || (youtubeVideoId && !/^[A-Za-z0-9_-]{11}$/.test(youtubeVideoId))
+    || (!youtubeVideoId && !materials.length)
+  ) {
+    throw new Error(`Invalid lesson in course '${courseSlug}'.`);
+  }
+
+  return { lessonSlug, lessonOrder, youtubeVideoId, materials };
+}
+
 async function importContent() {
   const inputPath = process.argv[2];
   if (!inputPath) throw new Error('Usage: npm run import:content -- path/to/course-content.json');
@@ -40,17 +74,7 @@ async function importContent() {
 
       const course = await database.get('SELECT id FROM courses WHERE slug = ?', [courseSlug]);
       for (const lessonInput of courseInput.lessons) {
-        const lessonSlug = String(lessonInput.slug || '').trim().toLowerCase();
-        const lessonOrder = Number(lessonInput.order);
-        const youtubeVideoId = String(lessonInput.youtubeVideoId || '').trim();
-        if (
-          !lessonSlug
-          || !lessonInput.title
-          || !Number.isInteger(lessonOrder)
-          || !/^[A-Za-z0-9_-]{11}$/.test(youtubeVideoId)
-        ) {
-          throw new Error(`Invalid lesson in course '${courseSlug}'.`);
-        }
+        const { lessonSlug, lessonOrder, youtubeVideoId, materials } = normalizeLessonInput(lessonInput, courseSlug);
 
         await database.run(`
           INSERT INTO lessons (
@@ -72,6 +96,14 @@ async function importContent() {
           'SELECT id FROM lessons WHERE course_id = ? AND slug = ?',
           [course.id, lessonSlug]
         );
+
+        await database.run('DELETE FROM lesson_materials WHERE lesson_id = ?', [lesson.id]);
+        for (const material of materials) {
+          await database.run(`
+            INSERT INTO lesson_materials (lesson_id, title, material_url, material_order)
+            VALUES (?, ?, ?, ?)
+          `, [lesson.id, material.title, material.url, material.order]);
+        }
 
         for (const checkpointInput of lessonInput.checkpoints || []) {
           const checkpointKey = String(checkpointInput.key || '').trim().toLowerCase();
@@ -119,7 +151,11 @@ async function importContent() {
   }
 }
 
-importContent().catch((error) => {
-  console.error('Content import failed:', error.message);
-  process.exit(1);
-});
+if (require.main === module) {
+  importContent().catch((error) => {
+    console.error('Content import failed:', error.message);
+    process.exit(1);
+  });
+}
+
+module.exports = { normalizeLessonInput, normalizeMaterials };

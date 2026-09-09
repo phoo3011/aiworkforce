@@ -146,6 +146,17 @@ async function initializeDatabase(database) {
       FOREIGN KEY(lesson_id) REFERENCES lessons(id) ON DELETE CASCADE
     );
 
+    CREATE TABLE IF NOT EXISTS lesson_materials (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      lesson_id INTEGER NOT NULL,
+      title TEXT NOT NULL,
+      material_url TEXT NOT NULL,
+      material_order INTEGER NOT NULL,
+      created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      UNIQUE(lesson_id, material_order),
+      FOREIGN KEY(lesson_id) REFERENCES lessons(id) ON DELETE CASCADE
+    );
+
     CREATE TABLE IF NOT EXISTS progress (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       student_id INTEGER NOT NULL,
@@ -159,10 +170,27 @@ async function initializeDatabase(database) {
     );
 
     CREATE INDEX IF NOT EXISTS idx_lessons_course_order ON lessons(course_id, lesson_order);
+    CREATE INDEX IF NOT EXISTS idx_lesson_materials_lesson_order ON lesson_materials(lesson_id, material_order);
     CREATE INDEX IF NOT EXISTS idx_progress_student_lesson ON progress(student_id, lesson_id);
+  `);
+
+  // Preserve existing lesson and progress IDs while separating the legacy Developer course.
+  const legacyDeveloperCourse = await database.get("SELECT id FROM courses WHERE slug = 'ai-developer'");
+  const trainerCourse = await database.get("SELECT id FROM courses WHERE slug = 'ai-developer-trainer'");
+  if (legacyDeveloperCourse && !trainerCourse) {
+    await database.run(
+      "UPDATE courses SET slug = 'ai-developer-trainer', title = 'AI Developer Trainer', description = 'หลักสูตรสายพัฒนา AI สำหรับผู้นำทีมและผู้สอน' WHERE id = ?",
+      [legacyDeveloperCourse.id]
+    );
+  }
+
+  await database.exec(`
+    INSERT INTO courses (slug, title, description)
+      VALUES ('ai-developer-trainer', 'AI Developer Trainer', 'หลักสูตรสายพัฒนา AI สำหรับผู้นำทีมและผู้สอน')
+      ON CONFLICT(slug) DO NOTHING;
 
     INSERT INTO courses (slug, title, description)
-      VALUES ('ai-developer', 'AI Developer', 'หลักสูตรสายพัฒนา AI')
+      VALUES ('ai-developer-learner', 'AI Developer Learner', 'หลักสูตรสายพัฒนา AI สำหรับผู้เรียน')
       ON CONFLICT(slug) DO NOTHING;
 
     INSERT INTO courses (slug, title, description)

@@ -279,7 +279,18 @@
   }
 
   /* ---------- CURRICULUM DETAIL ---------- */
-  .curriculum{background:var(--navy-deep); color:#fff;}
+  .curriculum{background:var(--navy-deep); color:#fff; scroll-margin-top:24px;}
+  .learning-order{
+    display:flex; gap:14px; align-items:flex-start; max-width:760px;
+    margin:0 0 30px; padding:18px 20px; border-radius:14px;
+    background:rgba(245,130,31,.12); border:1px solid rgba(245,130,31,.45);
+  }
+  .learning-order .order-num{
+    flex:0 0 auto; width:30px; height:30px; border-radius:50%; display:grid; place-items:center;
+    background:var(--amber); color:var(--navy-deep); font-family:'IBM Plex Mono',monospace; font-weight:700;
+  }
+  .learning-order strong{display:block; margin-bottom:3px; color:#fff;}
+  .learning-order p{margin:0; color:rgba(255,255,255,.75); font-size:.9rem; line-height:1.55;}
   .curric-block{margin-bottom:56px;}
   .curric-block:last-child{margin-bottom:0;}
   .curric-head{
@@ -437,8 +448,6 @@
   /* ---------- TRACKS v2 (numbered poster style) ---------- */
   .tracks-v2{display:flex; flex-direction:column; gap:16px;}
   .track-row{display:flex; align-items:center; gap:22px;}
-  .track-row .track-pill{transition:transform .18s ease, box-shadow .18s ease;}
-  .track-row:hover .track-pill{transform:translateX(4px); box-shadow:0 8px 22px -8px rgba(0,0,0,0.35);}
   .curric-block{scroll-margin-top:24px;}
   .track-num{
     font-family:'IBM Plex Mono',monospace; font-weight:800; font-size:2.6rem;
@@ -603,7 +612,7 @@
         <a class="btn btn-primary" href="https://docs.google.com/forms/d/e/1FAIpQLSc3-MZvEeWD0tDkmPyx9K5VR8dCAzjK3cwzMsK2wqrkh-Kyzw/viewform" target="_blank" rel="noopener">
           สมัครเรียนตอนนี้ →
         </a>
-        <a class="btn btn-ghost" href="#tracks">ดูรายละเอียดหลักสูตร</a>
+        <a class="btn btn-ghost" href="#curriculum">แผนการเรียน</a>
       </div>
     </div>
 
@@ -658,7 +667,7 @@
     <h2>2 เส้นทางการเรียนรู้สำหรับสาย Developer</h2>
   </div>
   <div class="tracks-v2">
-    <a class="track-row" href="#track-dl" style="text-decoration:none; cursor:pointer;">
+    <div class="track-row">
       <span class="track-num">01</span>
       <div class="track-pill">
         <span class="picon">&lt;/&gt;</span>
@@ -667,8 +676,8 @@
           <p>นักพัฒนาที่ต้องการสร้าง AI-enabled software</p>
         </div>
       </div>
-    </a>
-    <a class="track-row" href="#track-dt" style="text-decoration:none; cursor:pointer;">
+    </div>
+    <div class="track-row">
       <span class="track-num">02</span>
       <div class="track-pill">
         <span class="picon">🧠</span>
@@ -677,7 +686,7 @@
           <p>ผู้นำทีม Dev ที่วาง architecture และ mentoring</p>
         </div>
       </div>
-    </a>
+    </div>
   </div>
 
   <div class="aiat-strip">
@@ -695,10 +704,18 @@
   </div>
 </section>
 
-<section class="section curriculum">
+<section class="section curriculum" id="curriculum">
   <div class="section-head">
     <span class="kicker">Curriculum Detail · Phase 1</span>
     <h2>เนื้อหาการเรียนรู้รายชั่วโมง แยกตามเส้นทาง</h2>
+  </div>
+
+  <div class="learning-order">
+    <span class="order-num">1</span>
+    <div>
+      <strong>แนะนำให้เริ่มจาก Core AI Foundation ก่อน</strong>
+      <p>เป็นพื้นฐานร่วม 12 ชั่วโมงสำหรับผู้เรียนทุกสาย แล้วจึงเลือกเรียนเนื้อหาของ Learner หรือ Trainer ตามเส้นทางของตน</p>
+    </div>
   </div>
 
   <div class="curric-block theme-core">
@@ -712,10 +729,10 @@
     <table class="curric-table">
       <thead><tr><th>Session</th><th>ชั่วโมง</th><th></th></tr></thead>
       <tbody>
-        <tr><td>Intro to AI, Literacy</td><td>3</td><td><span class="mode-pill badge-only">Foundation</span><span class="mode-pill lesson-unavailable"><i class="fa-solid fa-clock" aria-hidden="true"></i> ดูบทเรียน</span></td></tr>
-        <tr><td>Prompt, NotebookLM</td><td>3</td><td><span class="mode-pill badge-only">Foundation</span><span class="mode-pill lesson-unavailable"><i class="fa-solid fa-clock" aria-hidden="true"></i> ดูบทเรียน</span></td></tr>
-        <tr><td>Design Thinking + AI Transformation</td><td>3</td><td><span class="mode-pill badge-only">Foundation</span><span class="mode-pill lesson-unavailable"><i class="fa-solid fa-clock" aria-hidden="true"></i> ดูบทเรียน</span></td></tr>
-        <tr><td>Ethics, Governance, Responsible, Right</td><td>3</td><td><span class="mode-pill badge-only">Foundation</span><span class="mode-pill lesson-unavailable"><i class="fa-solid fa-clock" aria-hidden="true"></i> ดูบทเรียน</span></td></tr>
+        <tr><td>Intro to AI, Literacy</td><td>3</td><td><span class="mode-pill badge-only">Foundation</span><a class="mode-pill lesson-access" href="lesson.html?course=core-ai-foundation&amp;lessonOrder=1"><i class="fa-solid fa-file-lines" aria-hidden="true"></i> ดูบทเรียน</a></td></tr>
+        <tr><td>Prompt, NotebookLM</td><td>3</td><td><span class="mode-pill badge-only">Foundation</span><a class="mode-pill lesson-access" href="lesson.html?course=core-ai-foundation&amp;lessonOrder=2"><i class="fa-solid fa-play" aria-hidden="true"></i> ดูบทเรียน</a></td></tr>
+        <tr><td>Design Thinking + AI Transformation</td><td>3</td><td><span class="mode-pill badge-only">Foundation</span><a class="mode-pill lesson-access" href="lesson.html?course=core-ai-foundation&amp;lessonOrder=3"><i class="fa-solid fa-play" aria-hidden="true"></i> ดูบทเรียน</a></td></tr>
+        <tr><td>Ethics, Governance, Responsible, Right</td><td>3</td><td><span class="mode-pill badge-only">Foundation</span><a class="mode-pill lesson-access" href="lesson.html?course=core-ai-foundation&amp;lessonOrder=4"><i class="fa-solid fa-play" aria-hidden="true"></i> ดูบทเรียน</a></td></tr>
       </tbody>
     </table>
   </div>
@@ -731,8 +748,8 @@
     <table class="curric-table">
       <thead><tr><th>Session</th><th>ชั่วโมง</th><th>หัวข้อ</th><th></th></tr></thead>
       <tbody>
-        <tr><td>Task Specific Lecture + Lab</td><td>3</td><td>Vibe Code + UXUI</td><td><span class="mode-pill badge-only">Lecture + Lab</span><span class="mode-pill lesson-unavailable"><i class="fa-solid fa-clock" aria-hidden="true"></i> ดูบทเรียน</span></td></tr>
-        <tr><td>Task Specific Lecture + Lab</td><td>3</td><td>Vibe Code + UXUI</td><td><span class="mode-pill badge-only">Lecture + Lab</span><span class="mode-pill lesson-unavailable"><i class="fa-solid fa-clock" aria-hidden="true"></i> ดูบทเรียน</span></td></tr>
+        <tr><td>Task Specific Lecture + Lab</td><td>3</td><td>Vibe Code + UXUI</td><td><span class="mode-pill badge-only">Lecture + Lab</span><a class="mode-pill lesson-access" href="lesson.html?course=ai-developer-learner&amp;lessonOrder=1"><i class="fa-solid fa-file-lines" aria-hidden="true"></i> ดูบทเรียน</a></td></tr>
+        <tr><td>Task Specific Lecture + Lab</td><td>3</td><td>Vibe Code + UXUI</td><td><span class="mode-pill badge-only">Lecture + Lab</span><a class="mode-pill lesson-access" href="lesson.html?course=ai-developer-learner&amp;lessonOrder=2"><i class="fa-solid fa-file-lines" aria-hidden="true"></i> ดูบทเรียน</a></td></tr>
         <tr><td>Task Specific Lecture + Lab</td><td>3</td><td>LLM Evaluation</td><td><span class="mode-pill badge-only">Lecture + Lab</span><span class="mode-pill lesson-unavailable"><i class="fa-solid fa-clock" aria-hidden="true"></i> ดูบทเรียน</span></td></tr>
         <tr><td>Task Specific Lecture + Lab</td><td>4</td><td>Vibe Code + DB</td><td><span class="mode-pill badge-only">Lecture + Lab</span><span class="mode-pill lesson-unavailable"><i class="fa-solid fa-clock" aria-hidden="true"></i> ดูบทเรียน</span></td></tr>
         <tr><td>Task Specific Lecture + Lab</td><td>4</td><td>AI and Media</td><td><span class="mode-pill badge-only">Lecture + Lab</span><span class="mode-pill lesson-unavailable"><i class="fa-solid fa-clock" aria-hidden="true"></i> ดูบทเรียน</span></td></tr>
@@ -756,9 +773,9 @@
     <table class="curric-table">
       <thead><tr><th>Session</th><th>ชั่วโมง</th><th>หัวข้อ</th><th></th></tr></thead>
       <tbody>
-        <tr><td>Task Specific Lecture + Lab</td><td>3</td><td>Vibe Code + UXUI</td><td><span class="mode-pill badge-only">Lecture + Lab</span><a class="mode-pill lesson-access" href="lesson.html?course=ai-developer&amp;lessonOrder=1"><i class="fa-solid fa-play" aria-hidden="true"></i> ดูบทเรียน</a></td></tr>
-        <tr><td>Task Specific Lecture + Lab</td><td>3</td><td>LLM Concept</td><td><span class="mode-pill badge-only">Lecture + Lab</span><span class="mode-pill lesson-unavailable"><i class="fa-solid fa-clock" aria-hidden="true"></i> ดูบทเรียน</span></td></tr>
-        <tr><td>Task Specific Lecture + Lab</td><td>3</td><td>LLM Evaluation</td><td><span class="mode-pill badge-only">Lecture + Lab</span><span class="mode-pill lesson-unavailable"><i class="fa-solid fa-clock" aria-hidden="true"></i> ดูบทเรียน</span></td></tr>
+        <tr><td>Task Specific Lecture + Lab</td><td>3</td><td>Vibe Code + UXUI</td><td><span class="mode-pill badge-only">Lecture + Lab</span><a class="mode-pill lesson-access" href="lesson.html?course=ai-developer-trainer&amp;lessonOrder=1"><i class="fa-solid fa-play" aria-hidden="true"></i> ดูบทเรียน</a></td></tr>
+        <tr><td>Task Specific Lecture + Lab</td><td>3</td><td>LLM Concept</td><td><span class="mode-pill badge-only">Lecture + Lab</span><a class="mode-pill lesson-access" href="lesson.html?course=ai-developer-trainer&amp;lessonOrder=2"><i class="fa-solid fa-play" aria-hidden="true"></i> ดูบทเรียน</a></td></tr>
+        <tr><td>Task Specific Lecture + Lab</td><td>3</td><td>LLM Evaluation</td><td><span class="mode-pill badge-only">Lecture + Lab</span><a class="mode-pill lesson-access" href="lesson.html?course=ai-developer-trainer&amp;lessonOrder=3"><i class="fa-solid fa-play" aria-hidden="true"></i> ดูบทเรียน</a></td></tr>
         <tr><td>Task Specific Lecture + Lab</td><td>4</td><td>Vibe Code + DB</td><td><span class="mode-pill badge-only">Lecture + Lab</span><span class="mode-pill lesson-unavailable"><i class="fa-solid fa-clock" aria-hidden="true"></i> ดูบทเรียน</span></td></tr>
         <tr><td>Task Specific Lecture + Lab</td><td>4</td><td>LLM RAG</td><td><span class="mode-pill badge-only">Lecture + Lab</span><span class="mode-pill lesson-unavailable"><i class="fa-solid fa-clock" aria-hidden="true"></i> ดูบทเรียน</span></td></tr>
         <tr><td>Task Specific Lecture + Lab</td><td>4</td><td>Guardrail + Security AI</td><td><span class="mode-pill badge-only">Lecture + Lab</span><span class="mode-pill lesson-unavailable"><i class="fa-solid fa-clock" aria-hidden="true"></i> ดูบทเรียน</span></td></tr>
@@ -1048,7 +1065,7 @@
   </div>
 </footer>
 
-<script src="site-config.js"></script>
+<script src="site-config.js?v=20260908-1"></script>
 <script type="module" src="auth.js"></script>
 </body>
 </html>
