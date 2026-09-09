@@ -184,6 +184,14 @@ async function initializeDatabase(database) {
     );
   }
 
+  const marketingCourse = await database.get("SELECT id, title FROM courses WHERE slug = 'ai-marketing'");
+  if (marketingCourse && marketingCourse.title === 'AI Marketing') {
+    await database.run(
+      "UPDATE courses SET title = 'AI Marketing Learner' WHERE id = ?",
+      [marketingCourse.id]
+    );
+  }
+
   await database.exec(`
     INSERT INTO courses (slug, title, description)
       VALUES ('ai-developer-trainer', 'AI Developer Trainer', 'หลักสูตรสายพัฒนา AI สำหรับผู้นำทีมและผู้สอน')
@@ -194,7 +202,7 @@ async function initializeDatabase(database) {
       ON CONFLICT(slug) DO NOTHING;
 
     INSERT INTO courses (slug, title, description)
-      VALUES ('ai-marketing', 'AI Marketing', 'หลักสูตรสายการตลาดด้วย AI')
+      VALUES ('ai-marketing', 'AI Marketing Learner', 'หลักสูตรสายการตลาดด้วย AI')
       ON CONFLICT(slug) DO NOTHING;
   `);
 
