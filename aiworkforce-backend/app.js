@@ -123,7 +123,7 @@ function createApp({ database, verifyIdToken, allowedOrigins, rateLimitOptions }
       }
 
       const student = await database.get(`
-        SELECT id, email, status, firebase_uid
+        SELECT id, email, status, firebase_uid, track
         FROM students
         WHERE LOWER(email) = ?
       `, [email]);
@@ -152,7 +152,16 @@ function createApp({ database, verifyIdToken, allowedOrigins, rateLimitOptions }
     }
   }
 
-  async function getStudentCourses(studentId) {
+  async function getStudentCourses(studentId, track) {
+    let trackCondition = '';
+    if (track === 'dl') {
+      trackCondition = "AND c.slug IN ('core-ai-foundation', 'ai-developer-learner')";
+    } else if (track === 'dt') {
+      trackCondition = "AND c.slug IN ('core-ai-foundation', 'ai-developer-trainer')";
+    } else if (track === 'ml') {
+      trackCondition = "AND c.slug IN ('core-ai-foundation', 'ai-marketing')";
+    }
+
     return database.all(`
       SELECT
         c.id, c.slug, c.title, c.description,
@@ -161,27 +170,32 @@ function createApp({ database, verifyIdToken, allowedOrigins, rateLimitOptions }
       FROM courses c
       LEFT JOIN lessons l ON l.course_id = c.id AND l.active = 1
       LEFT JOIN progress p ON p.lesson_id = l.id AND p.student_id = ?
-      WHERE c.active = 1
+      WHERE c.active = 1 ${trackCondition}
       GROUP BY c.id
-      ORDER BY c.title
+      ORDER BY CASE c.slug
+        WHEN 'core-ai-foundation' THEN 1
+        WHEN 'ai-developer-learner' THEN 2
+        WHEN 'ai-developer-trainer' THEN 3
+        WHEN 'ai-marketing' THEN 4
+        ELSE 5
+      END, c.title
     `, [studentId]);
   }
 
   app.get('/api/me', authenticate, async (req, res, next) => {
     try {
-      res.json({ authorized: true, email: req.student.email, courses: await getStudentCourses(req.student.id) });
+      res.json({ authorized: true, email: req.student.email, courses: await getStudentCourses(req.student.id, req.student.track) });
     } catch (error) {
       next(error);
     }
   });
 
-  // Compatibility route for the currently deployed frontend.
   app.post('/api/verify-token', authenticate, async (req, res, next) => {
     try {
       res.json({
         authorized: true,
         email: req.student.email,
-        courses: await getStudentCourses(req.student.id),
+        courses: await getStudentCourses(req.student.id, req.student.track),
         message: 'ยืนยันสิทธิ์สำเร็จ'
       });
     } catch (error) {
@@ -191,7 +205,7 @@ function createApp({ database, verifyIdToken, allowedOrigins, rateLimitOptions }
 
   app.get('/api/courses', authenticate, async (req, res, next) => {
     try {
-      res.json({ courses: await getStudentCourses(req.student.id) });
+      res.json({ courses: await getStudentCourses(req.student.id, req.student.track) });
     } catch (error) {
       next(error);
     }
