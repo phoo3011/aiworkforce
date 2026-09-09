@@ -4,7 +4,7 @@
   "description": "Protected course API for AI Workforce",
   "main": "server.js",
   "scripts": {
-    "start": "node seed.js && node server.js",
+    "start": "node seed.js && node import-content.js && node server.js",
     "seed": "node seed.js",
     "import:content": "node import-content.js",
     "test": "node --test"

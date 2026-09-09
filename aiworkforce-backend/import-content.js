@@ -44,11 +44,23 @@ function normalizeLessonInput(lessonInput, courseSlug) {
 }
 
 async function importContent() {
-  const inputPath = process.argv[2];
-  if (!inputPath) throw new Error('Usage: npm run import:content -- path/to/course-content.json');
+  let data;
+  let sourceLabel = '';
 
-  const resolvedInputPath = path.resolve(inputPath);
-  const data = JSON.parse(fs.readFileSync(resolvedInputPath, 'utf8'));
+  if (process.env.COURSE_JSON_DATA) {
+    data = JSON.parse(process.env.COURSE_JSON_DATA);
+    sourceLabel = 'Environment Variable COURSE_JSON_DATA';
+  } else {
+    const inputPath = process.argv[2];
+    if (!inputPath) {
+      console.log('No course content JSON provided (via argument or COURSE_JSON_DATA env var). Skipping import.');
+      return;
+    }
+    const resolvedInputPath = path.resolve(inputPath);
+    data = JSON.parse(fs.readFileSync(resolvedInputPath, 'utf8'));
+    sourceLabel = resolvedInputPath;
+  }
+
   if (!Array.isArray(data.courses)) throw new Error('Content JSON must have a courses array.');
 
   const database = await openDatabase();
@@ -142,7 +154,7 @@ async function importContent() {
     }
 
     await database.exec('COMMIT;');
-    console.log(`Imported course content from ${resolvedInputPath}`);
+    console.log(`Imported course content from ${sourceLabel}`);
   } catch (error) {
     try { await database.exec('ROLLBACK;'); } catch { /* transaction may not have started */ }
     throw error;
