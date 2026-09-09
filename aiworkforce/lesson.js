@@ -5,6 +5,10 @@ const lessonStatus = document.getElementById('lesson-status');
 const lessonContent = document.getElementById('lesson-content');
 const testList = document.getElementById('test-list');
 const testPanel = document.querySelector('.test-panel');
+const videoCard = document.getElementById('video-card');
+const videoUnavailable = document.getElementById('video-unavailable');
+const materialsPanel = document.getElementById('materials-panel');
+const materialsList = document.getElementById('materials-list');
 let player;
 let requiresLogin = false;
 
@@ -18,7 +22,11 @@ function lockLessonAfterSignOut() {
   player = null;
   document.getElementById('youtube-player').replaceChildren();
   testList.replaceChildren();
+  materialsList.replaceChildren();
   testPanel.hidden = true;
+  materialsPanel.hidden = true;
+  videoCard.hidden = false;
+  videoUnavailable.hidden = true;
   lessonContent.hidden = true;
   lessonStatus.hidden = false;
   lessonStatus.classList.add('error');
@@ -55,6 +63,27 @@ function safeFormUrl(value) {
   } catch {
     return null;
   }
+}
+
+function renderMaterials(materials) {
+  materialsList.replaceChildren();
+  const safeMaterials = materials.filter((material) => safeFormUrl(material.url));
+  materialsPanel.hidden = safeMaterials.length === 0;
+
+  safeMaterials.forEach((material) => {
+    const link = document.createElement('a');
+    link.className = 'material-link';
+    link.href = safeFormUrl(material.url);
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+
+    const title = document.createElement('strong');
+    title.textContent = material.title;
+    const action = document.createElement('span');
+    action.innerHTML = 'เปิดสไลด์ <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>';
+    link.append(title, action);
+    materialsList.append(link);
+  });
 }
 
 function formatTime(seconds) {
@@ -201,16 +230,20 @@ async function loadLesson() {
       lessonId = matchedLesson.id;
     }
 
-    const { lesson, checkpoints } = await apiFetch(`/api/lessons/${lessonId}`, { user });
+    const { lesson, checkpoints, materials = [] } = await apiFetch(`/api/lessons/${lessonId}`, { user });
     document.title = `${lesson.title} | AI Workforce`;
     document.getElementById('course-title').textContent = lesson.courseTitle;
     document.getElementById('lesson-title').textContent = lesson.title;
     document.getElementById('lesson-description').textContent = lesson.description || `บทที่ ${lesson.lessonOrder}`;
     renderTests(checkpoints, Number(lesson.completed), lesson.id);
+    renderMaterials(materials);
+    videoCard.hidden = !lesson.youtubeVideoId;
+    videoUnavailable.hidden = Boolean(lesson.youtubeVideoId);
     lessonStatus.hidden = true;
     lessonContent.hidden = false;
 
     await saveProgress(lesson.id, 'lesson_opened');
+    if (!lesson.youtubeVideoId) return;
     player = await createLessonPlayer({
       elementId: 'youtube-player',
       videoId: lesson.youtubeVideoId,
