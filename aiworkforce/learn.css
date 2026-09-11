@@ -29,8 +29,26 @@ body {
 }
 .learning-header img { display: block; width: auto; height: 34px; max-width: 54vw; }
 .learning-header-actions { display: flex; align-items: center; gap: 12px; }
-.back-link { color: #d8efea; font-size: 0.9rem; text-decoration: none; }
-.back-link:hover { color: #fff; }
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 6px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 8px;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1.25;
+  text-decoration: none;
+  transition: transform 0.18s ease, background 0.18s ease;
+}
+.back-link:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.18);
+}
 
 .learning-shell { width: min(1160px, calc(100% - 40px)); margin: 0 auto; padding: 52px 0 80px; }
 .learning-kicker {
@@ -86,8 +104,9 @@ body {
   background: #fff;
   box-shadow: 0 16px 45px -36px rgba(4, 34, 31, 0.55);
 }
-.course-head { padding: 26px 28px; background: linear-gradient(135deg, #07342f, #0d655c); color: #fff; }
-.course-head.foundation { background: linear-gradient(135deg, #6b300c, #dd6d1b); }
+.course-head { padding: 26px 28px; background: linear-gradient(135deg, #0a1230, #16296b); color: #fff; }
+.course-head.teal { background: linear-gradient(135deg, #07342f, #0d655c); }
+.course-head.orange { background: linear-gradient(135deg, #6b300c, #dd6d1b); }
 .course-head h2 { margin: 0 0 8px; font-size: 1.45rem; }
 .course-head p { margin: 0; color: rgba(255,255,255,.78); font-size: .9rem; line-height: 1.6; }
 .progress-copy { margin-top: 13px; color: var(--learn-mint); font: 500 .78rem 'IBM Plex Mono', monospace; }

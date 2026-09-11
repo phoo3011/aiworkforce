@@ -156,6 +156,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function updateTrackVisibility(access) {
     document.body.classList.remove('track-dl', 'track-dt', 'track-ml', 'track-all');
+    
+    // Update track badges
+    document.querySelectorAll('.track-badge').forEach((badge) => {
+      if (!access) {
+        badge.style.display = 'none';
+      } else {
+        const t = (access.track || 'all').toLowerCase();
+        let label = t.toUpperCase();
+        if (t === 'dl') label = 'AI Developer Learner';
+        else if (t === 'dt') label = 'AI Developer Trainer';
+        else if (t === 'ml') label = 'AI Marketing';
+        else if (t === 'all') label = 'Full Access';
+        badge.textContent = label;
+        badge.style.display = 'inline-flex';
+      }
+    });
+
     if (!access) {
       document.querySelectorAll('.lesson-access, .lesson-unavailable').forEach((el) => {
         el.style.removeProperty('display');
@@ -192,13 +209,11 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!containerTrack || containerTrack === 'foundation') return;
 
       const isAllowed = track === 'all' || track === containerTrack;
-      container.querySelectorAll('.lesson-access, .lesson-unavailable').forEach((btn) => {
-        if (!isAllowed) {
-          btn.style.setProperty('display', 'none', 'important');
-        } else {
-          btn.style.removeProperty('display');
-        }
-      });
+      if (!isAllowed) {
+        container.style.setProperty('display', 'none', 'important');
+      } else {
+        container.style.removeProperty('display');
+      }
     });
   }
 

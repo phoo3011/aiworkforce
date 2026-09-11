@@ -96,53 +96,72 @@
 .btn-logout:hover {
   background-color: #dc2626;
 }
+
 .user-info {
   margin-bottom: 20px;
   font-size: 1rem;
   color: #4b5563;
 }
-  .user-email {
-    font-weight: 700;
-    color: #111827;
-  }
-  
-  .btn-login-nav {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    background: linear-gradient(135deg, #f5821f 0%, #ea7310 100%);
-    color: var(--navy-deep, #04221f);
-    font-size: 0.85rem;
-    font-weight: 600;
-    line-height: 1.25;
-    padding: 6px 16px;
-    border-radius: 999px;
-    border: 1px solid rgba(245, 130, 31, 0.4);
-    cursor: pointer;
-    transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
-    font-family: inherit;
-    box-shadow: 0 2px 6px rgba(245, 130, 31, 0.2);
-    white-space: nowrap;
-    text-decoration: none;
-  }
-  
-  .btn-login-nav:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(245, 130, 31, 0.35);
-    filter: brightness(1.04);
-  }
+.user-email {
+  font-weight: 700;
+  color: #111827;
+}
 
-  .btn-login-nav:active {
-    transform: translateY(0);
-    box-shadow: 0 1px 3px rgba(245, 130, 31, 0.25);
-  }
+.btn-login-nav {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1.25;
+  padding: 6px 16px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  cursor: pointer;
+  transition: transform 0.18s ease, background 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+  font-family: inherit;
+  box-shadow: none;
+  white-space: nowrap;
+  text-decoration: none;
+}
 
-  .btn-login-nav .nav-email-text {
-    white-space: nowrap;
-    display: inline-block;
-    vertical-align: middle;
-  }
+.btn-login-nav:hover {
+  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+.btn-login-nav:active {
+  transform: translateY(0);
+}
+
+body.logged-in .btn-login-nav {
+  background: linear-gradient(135deg, #f5821f 0%, #ea7310 100%);
+  color: var(--navy-deep, #04221f);
+  border: 1px solid rgba(245, 130, 31, 0.4);
+  box-shadow: 0 2px 6px rgba(245, 130, 31, 0.2);
+}
+
+body.logged-in .btn-login-nav:hover {
+  transform: translateY(-1px);
+  background: linear-gradient(135deg, #f5821f 0%, #ea7310 100%);
+  box-shadow: 0 4px 12px rgba(245, 130, 31, 0.35);
+  filter: brightness(1.04);
+}
+
+body.logged-in .btn-login-nav:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 3px rgba(245, 130, 31, 0.25);
+}
+
+.btn-login-nav .nav-email-text {
+  white-space: nowrap;
+  display: inline-block;
+  vertical-align: middle;
+}
 
 /* Ensure SweetAlert2 popups always appear above the auth modal (z-index: 9999) */
 div.swal2-container {
@@ -213,3 +232,114 @@ body.logged-in.track-ml [data-track="mt"] .lesson-unavailable {
   display: none !important;
 }
 
+body:not(.logged-in) .btn-back-home {
+  display: none !important;
+}
+
+.btn-back-home {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 6px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 8px;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1.25;
+  cursor: pointer;
+  text-decoration: none;
+  font-family: inherit;
+  white-space: nowrap;
+  transition: transform 0.18s ease, background 0.18s ease;
+}
+
+.btn-back-home:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.btn-back-home:active {
+  transform: translateY(0);
+}
+
+body.logged-in .main-logo-link {
+  display: none !important;
+}
+
+body.logged-in .mode-pill.badge-only { display: none !important; }
+
+/* Hide hero buttons in index.html based on track */
+body.logged-in.track-dl .hero-cta a[href="ai-marketing.html"],
+body.logged-in.track-dt .hero-cta a[href="ai-marketing.html"] {
+  display: none !important;
+}
+
+body.logged-in.track-ml .hero-cta a[href="ai-developer.html"] {
+  display: none !important;
+}
+
+/* Remove arrow icons from hero buttons when logged in */
+body.logged-in .hero-cta a i.fa-arrow-right {
+  display: none !important;
+}
+
+/* Hide specific elements when logged in */
+body.logged-in .eyebrow,
+body.logged-in .funding,
+body.logged-in .register-v2 {
+  display: none !important;
+}
+
+/* Hide hero register buttons and curriculum details when logged in */
+body.logged-in .hero-cta a[target="_blank"],
+body.logged-in .hero-cta a.btn-ghost,
+body.logged-in .hero-cta a[href="#curriculum"] {
+  display: none !important;
+}
+
+.track-switch-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff !important;
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1.25;
+  padding: 6px 16px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.45) !important;
+  cursor: pointer;
+  transition: transform 0.18s ease, background 0.18s ease;
+  font-family: inherit;
+  text-decoration: none;
+}
+.track-switch-btn:hover {
+  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.2);
+}
+
+body.logged-in:not(.track-all) .track-switch-btn {
+  display: none !important;
+}
+
+.track-badge {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 12px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.25;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  font-family: inherit;
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+}
