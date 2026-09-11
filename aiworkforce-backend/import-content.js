@@ -51,7 +51,8 @@ async function importContent() {
     data = JSON.parse(process.env.COURSE_JSON_DATA);
     sourceLabel = 'Environment Variable COURSE_JSON_DATA';
   } else {
-    const inputPath = process.argv[2];
+    const defaultCourseContent = path.resolve(__dirname, 'course-content.json');
+    const inputPath = process.argv[2] || (fs.existsSync(defaultCourseContent) ? defaultCourseContent : null);
     if (!inputPath) {
       console.log('No course content JSON provided (via argument or COURSE_JSON_DATA env var). Skipping import.');
       return;

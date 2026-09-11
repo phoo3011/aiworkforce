@@ -38,10 +38,10 @@ async function createTestContext(t) {
   return { database, baseUrl };
 }
 
-async function addStudent(database, name, status = 'active') {
+async function addStudent(database, name, status = 'active', track = 'all') {
   const result = await database.run(
-    'INSERT INTO students (email, status) VALUES (?, ?)',
-    [`${name}@example.com`, status]
+    'INSERT INTO students (email, status, track) VALUES (?, ?, ?)',
+    [`${name}@example.com`, status, track]
   );
   return result.lastID;
 }
@@ -265,4 +265,33 @@ test('content importer accepts document-only lessons and rejects invalid materia
     slug: 'insecure', title: 'Insecure lesson', order: 3,
     materials: [{ title: 'Slides', url: 'http://example.com/slides.pdf' }]
   }, 'example-course'));
+});
+
+test('students can only access courses matching their assigned track', async (t) => {
+  const { database, baseUrl } = await createTestContext(t);
+  await database.run("INSERT INTO courses (slug, title) VALUES ('core-ai-foundation', 'Core AI Foundation')");
+
+  await addStudent(database, 'student-dl', 'active', 'dl');
+  await addStudent(database, 'student-dt', 'active', 'dt');
+  await addStudent(database, 'student-ml', 'active', 'ml');
+
+  const dlMe = await (await apiRequest(baseUrl, '/api/me', 'student-dl')).json();
+  const dtMe = await (await apiRequest(baseUrl, '/api/me', 'student-dt')).json();
+  const mlMe = await (await apiRequest(baseUrl, '/api/me', 'student-ml')).json();
+
+  assert.deepEqual(dlMe.courses.map((c) => c.slug), ['core-ai-foundation', 'ai-developer-learner']);
+  assert.deepEqual(dtMe.courses.map((c) => c.slug), ['core-ai-foundation', 'ai-developer-trainer']);
+  assert.deepEqual(mlMe.courses.map((c) => c.slug), ['core-ai-foundation', 'ai-marketing']);
+
+  const dlToDt = await apiRequest(baseUrl, '/api/courses/ai-developer-trainer/lessons', 'student-dl');
+  assert.equal(dlToDt.status, 403);
+
+  const dtToDl = await apiRequest(baseUrl, '/api/courses/ai-developer-learner/lessons', 'student-dt');
+  assert.equal(dtToDl.status, 403);
+
+  const mlToDt = await apiRequest(baseUrl, '/api/courses/ai-developer-trainer/lessons', 'student-ml');
+  assert.equal(mlToDt.status, 403);
+
+  const dlToCore = await apiRequest(baseUrl, '/api/courses/core-ai-foundation/lessons', 'student-dl');
+  assert.equal(dlToCore.status, 200);
 });

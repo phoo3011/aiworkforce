@@ -152,6 +152,15 @@ function createApp({ database, verifyIdToken, allowedOrigins, rateLimitOptions }
     }
   }
 
+  function isCourseAllowedForTrack(courseSlug, track) {
+    if (!track || track === 'all') return true;
+    if (courseSlug === 'core-ai-foundation') return true;
+    if (track === 'dl' && courseSlug === 'ai-developer-learner') return true;
+    if (track === 'dt' && courseSlug === 'ai-developer-trainer') return true;
+    if (track === 'ml' && courseSlug === 'ai-marketing') return true;
+    return false;
+  }
+
   async function getStudentCourses(studentId, track) {
     let trackCondition = '';
     if (track === 'dl') {
@@ -184,7 +193,12 @@ function createApp({ database, verifyIdToken, allowedOrigins, rateLimitOptions }
 
   app.get('/api/me', authenticate, async (req, res, next) => {
     try {
-      res.json({ authorized: true, email: req.student.email, courses: await getStudentCourses(req.student.id, req.student.track) });
+      res.json({
+        authorized: true,
+        email: req.student.email,
+        track: req.student.track,
+        courses: await getStudentCourses(req.student.id, req.student.track)
+      });
     } catch (error) {
       next(error);
     }
@@ -195,6 +209,7 @@ function createApp({ database, verifyIdToken, allowedOrigins, rateLimitOptions }
       res.json({
         authorized: true,
         email: req.student.email,
+        track: req.student.track,
         courses: await getStudentCourses(req.student.id, req.student.track),
         message: 'ยืนยันสิทธิ์สำเร็จ'
       });
@@ -213,6 +228,11 @@ function createApp({ database, verifyIdToken, allowedOrigins, rateLimitOptions }
 
   app.get('/api/courses/:courseSlug/lessons', authenticate, async (req, res, next) => {
     try {
+      if (!isCourseAllowedForTrack(req.params.courseSlug, req.student.track)) {
+        res.status(403).json({ authorized: false, message: 'คุณไม่มีสิทธิ์เข้าถึงหลักสูตรนี้' });
+        return;
+      }
+
       const course = await database.get(`
         SELECT c.id, c.slug, c.title, c.description
         FROM courses c
@@ -267,6 +287,11 @@ function createApp({ database, verifyIdToken, allowedOrigins, rateLimitOptions }
         return;
       }
 
+      if (!isCourseAllowedForTrack(lesson.courseSlug, req.student.track)) {
+        res.status(403).json({ authorized: false, message: 'คุณไม่มีสิทธิ์เข้าถึงบทเรียนนี้' });
+        return;
+      }
+
       const checkpoints = await database.all(`
         SELECT
           cp.id, cp.checkpoint_key AS checkpointKey, cp.type, cp.title,
@@ -313,7 +338,7 @@ function createApp({ database, verifyIdToken, allowedOrigins, rateLimitOptions }
       }
 
       const access = await database.get(`
-        SELECT l.id
+        SELECT l.id, c.slug AS courseSlug
         FROM lessons l
         JOIN courses c ON c.id = l.course_id AND c.active = 1
         WHERE l.id = ? AND l.active = 1
@@ -321,6 +346,11 @@ function createApp({ database, verifyIdToken, allowedOrigins, rateLimitOptions }
 
       if (!access) {
         res.status(404).json({ message: 'ไม่พบบทเรียนหรือบทเรียนยังไม่เปิดใช้งาน' });
+        return;
+      }
+
+      if (!isCourseAllowedForTrack(access.courseSlug, req.student.track)) {
+        res.status(403).json({ authorized: false, message: 'คุณไม่มีสิทธิ์บันทึกความคืบหน้าของบทเรียนนี้' });
         return;
       }
 
