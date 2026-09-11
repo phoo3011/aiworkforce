@@ -91,15 +91,19 @@ async function loadDashboard() {
       return;
     }
 
-    const selectedCourse = requestedCourseSlug
-      ? access.courses.find((course) => course.slug === requestedCourseSlug)
-      : null;
-    const coursesToShow = selectedCourse ? [selectedCourse] : access.courses;
-
-    if (selectedCourse) {
+    let coursesToShow = [];
+    if (requestedCourseSlug) {
+      const selectedCourse = access.courses.find((course) => course.slug === requestedCourseSlug);
+      if (!selectedCourse) {
+        showStatus('คุณไม่มีสิทธิ์เข้าถึงหลักสูตรนี้ หรือไม่พบหลักสูตรที่ระบุ', true);
+        return;
+      }
       dashboardTitle.textContent = `บทเรียน ${selectedCourse.title}`;
       dashboardIntro.textContent = `เลือกบทเรียนของหลักสูตร ${selectedCourse.title} เพื่อดูวิดีโอ แบบทดสอบ และความคืบหน้าของคุณ`;
       allCoursesLink.hidden = false;
+      coursesToShow = [selectedCourse];
+    } else {
+      coursesToShow = access.courses;
     }
 
     const courseResults = await Promise.all(coursesToShow.map(async (course) => {
@@ -110,6 +114,7 @@ async function loadDashboard() {
     courseGrid.replaceChildren(...courseResults.map(({ course, lessons }) => renderCourse(course, lessons)));
     statusPanel.hidden = true;
   } catch (error) {
+    console.error('Failed to load dashboard:', error);
     const message = error instanceof ApiError
       ? error.message
       : 'โหลดข้อมูลบทเรียนไม่สำเร็จ กรุณาลองใหม่อีกครั้ง';

@@ -62,10 +62,10 @@
   .logos img{height:34px; width:auto; display:block;}
   .logos a:has(img){display:flex; align-items:center; text-decoration:none;}
   .btn-learning-nav{
-    display:inline-flex; align-items:center; justify-content:center; gap:8px;
-    padding:8px 16px; border:1px solid rgba(255,255,255,0.65); border-radius:100px;
+    display:inline-flex; align-items:center; justify-content:center; gap:6px;
+    padding:6px 16px; border:1px solid rgba(255,255,255,0.65); border-radius:100px;
     color:#fff; background:rgba(58,31,12,0.16);
-    font-size:0.82rem; font-weight:700; text-decoration:none;
+    font-size:0.85rem; font-weight:600; line-height:1.25; text-decoration:none;
     transition:transform .18s ease, background .18s ease;
   }
   .btn-learning-nav:hover{transform:translateY(-2px); background:rgba(58,31,12,0.28);}
@@ -714,7 +714,7 @@
     <h2>เนื้อหาการเรียนรู้รายชั่วโมง แยกตามเส้นทาง</h2>
   </div>
 
-  <div class="curric-block theme-core">
+  <div class="curric-block theme-core" data-track="foundation">
     <div class="curric-head">
       <div class="curric-badge">AI</div>
       <div>
@@ -733,7 +733,7 @@
     </table>
   </div>
 
-  <div class="curric-block theme-ml">
+  <div class="curric-block theme-ml" id="track-ml" data-track="ml">
     <div class="curric-head">
       <div class="curric-badge">ML</div>
       <div>
@@ -758,7 +758,7 @@
     </table>
   </div>
 
-  <div class="curric-block theme-mt">
+  <div class="curric-block theme-mt" id="track-mt" data-track="mt">
     <div class="curric-head">
       <div class="curric-badge">MT</div>
       <div>

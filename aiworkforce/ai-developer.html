@@ -62,10 +62,10 @@
   .logos img{height:34px; width:auto; display:block;}
   .logos a:has(img){display:flex; align-items:center; text-decoration:none;}
   .btn-learning-nav{
-    display:inline-flex; align-items:center; justify-content:center; gap:8px;
-    padding:8px 16px; border:1px solid var(--amber); border-radius:100px;
+    display:inline-flex; align-items:center; justify-content:center; gap:6px;
+    padding:6px 16px; border:1px solid var(--amber); border-radius:100px;
     color:var(--amber-soft); background:rgba(245,130,31,0.1);
-    font-size:0.82rem; font-weight:700; text-decoration:none;
+    font-size:0.85rem; font-weight:600; line-height:1.25; text-decoration:none;
     transition:transform .18s ease, background .18s ease;
   }
   .btn-learning-nav:hover{transform:translateY(-2px); background:rgba(245,130,31,0.2);}
@@ -718,7 +718,7 @@
     </div>
   </div>
 
-  <div class="curric-block theme-core">
+  <div class="curric-block theme-core" data-track="foundation">
     <div class="curric-head">
       <div class="curric-badge">AI</div>
       <div>
@@ -737,7 +737,7 @@
     </table>
   </div>
 
-  <div class="curric-block theme-dl" id="track-dl">
+  <div class="curric-block theme-dl" id="track-dl" data-track="dl">
     <div class="curric-head">
       <div class="curric-badge">DL</div>
       <div>
@@ -762,7 +762,7 @@
     </table>
   </div>
 
-  <div class="curric-block theme-dt" id="track-dt">
+  <div class="curric-block theme-dt" id="track-dt" data-track="dt">
     <div class="curric-head">
       <div class="curric-badge">DT</div>
       <div>

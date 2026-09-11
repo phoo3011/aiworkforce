@@ -152,6 +152,55 @@ document.addEventListener('DOMContentLoaded', () => {
   const profileSection = document.getElementById('logged-in-container');
   const emailDisplay = document.getElementById('user-email-display');
   let interactiveLogin = false;
+  let currentAccess = null;
+
+  function updateTrackVisibility(access) {
+    document.body.classList.remove('track-dl', 'track-dt', 'track-ml', 'track-all');
+    if (!access) {
+      document.querySelectorAll('.lesson-access, .lesson-unavailable').forEach((el) => {
+        el.style.removeProperty('display');
+      });
+      return;
+    }
+
+    const track = (access.track || 'all').toLowerCase();
+    document.body.classList.add(`track-${track}`);
+
+    const allowedSlugs = new Set((access.courses || []).map((c) => c.slug));
+
+    // Filter a.lesson-access based on ?course= parameter
+    document.querySelectorAll('a.lesson-access').forEach((link) => {
+      try {
+        const url = new URL(link.href, window.location.origin);
+        const course = url.searchParams.get('course');
+        if (course) {
+          const isAllowed = track === 'all' || allowedSlugs.has(course);
+          if (!isAllowed) {
+            link.style.setProperty('display', 'none', 'important');
+          } else {
+            link.style.removeProperty('display');
+          }
+        }
+      } catch {
+        // Ignore invalid URL
+      }
+    });
+
+    // Filter track container blocks (e.g. data-track="dl", data-track="dt", etc.)
+    document.querySelectorAll('[data-track]').forEach((container) => {
+      const containerTrack = container.getAttribute('data-track')?.toLowerCase();
+      if (!containerTrack || containerTrack === 'foundation') return;
+
+      const isAllowed = track === 'all' || track === containerTrack;
+      container.querySelectorAll('.lesson-access, .lesson-unavailable').forEach((btn) => {
+        if (!isAllowed) {
+          btn.style.setProperty('display', 'none', 'important');
+        } else {
+          btn.style.removeProperty('display');
+        }
+      });
+    });
+  }
 
   function setNavUser(email) {
     document.querySelectorAll('.btn-login-nav').forEach((button) => {
@@ -160,7 +209,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const icon = document.createElement('i');
         icon.className = 'fa-regular fa-user';
         icon.setAttribute('aria-hidden', 'true');
-        button.append(icon, document.createTextNode(email));
+        const span = document.createElement('span');
+        span.className = 'nav-email-text';
+        span.textContent = email;
+        button.append(icon, span);
       } else {
         button.textContent = 'Login';
       }
@@ -168,11 +220,13 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function showSignedOut() {
+    currentAccess = null;
     loginSection.style.display = 'block';
     profileSection.style.display = 'none';
     emailDisplay.textContent = '';
     setNavUser('');
     document.body.classList.remove('logged-in');
+    updateTrackVisibility(null);
   }
 
   function showSignedIn(email) {
@@ -221,7 +275,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     try {
       const access = await apiFetch('/api/me', { user });
+      currentAccess = access;
       showSignedIn(access.email || user.email);
+      updateTrackVisibility(access);
       window.dispatchEvent(new CustomEvent('aiworkforce:auth-changed', { detail: access }));
 
       if (interactiveLogin) {

@@ -110,22 +110,38 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    background-color: var(--amber, #f5821f);
+    gap: 6px;
+    background: linear-gradient(135deg, #f5821f 0%, #ea7310 100%);
     color: var(--navy-deep, #04221f);
-    font-size: 0.95rem;
-    font-weight: 700;
-    padding: 8px 24px;
-    border-radius: 100px;
-    border: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    line-height: 1.25;
+    padding: 6px 16px;
+    border-radius: 999px;
+    border: 1px solid rgba(245, 130, 31, 0.4);
     cursor: pointer;
-    transition: transform 0.18s ease, box-shadow 0.18s ease;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
     font-family: inherit;
+    box-shadow: 0 2px 6px rgba(245, 130, 31, 0.2);
+    white-space: nowrap;
+    text-decoration: none;
   }
   
   .btn-login-nav:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px -4px rgba(245, 166, 35, 0.4);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(245, 130, 31, 0.35);
+    filter: brightness(1.04);
+  }
+
+  .btn-login-nav:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 3px rgba(245, 130, 31, 0.25);
+  }
+
+  .btn-login-nav .nav-email-text {
+    white-space: nowrap;
+    display: inline-block;
+    vertical-align: middle;
   }
 
 /* Ensure SweetAlert2 popups always appear above the auth modal (z-index: 9999) */
@@ -139,3 +155,61 @@ body:not(.logged-in) .lesson-access,
 body:not(.logged-in) .lesson-unavailable {
   display: none !important;
 }
+
+/* Track-based visibility rules:
+   - When not logged in, all lesson access/unavailable buttons are hidden.
+   - When logged in:
+     * track-all: sees all track buttons.
+     * track-dl: only sees DL and Foundation buttons. DT and ML/MT buttons are hidden.
+     * track-dt: only sees DT and Foundation buttons. DL and ML/MT buttons are hidden.
+     * track-ml: only sees ML and Foundation buttons. DL, DT, and MT buttons are hidden.
+*/
+
+/* Hide DT, ML, MT buttons for DL users */
+body.logged-in.track-dl #track-dt .lesson-access,
+body.logged-in.track-dl #track-dt .lesson-unavailable,
+body.logged-in.track-dl [data-track="dt"] .lesson-access,
+body.logged-in.track-dl [data-track="dt"] .lesson-unavailable,
+body.logged-in.track-dl #track-ml .lesson-access,
+body.logged-in.track-dl #track-ml .lesson-unavailable,
+body.logged-in.track-dl [data-track="ml"] .lesson-access,
+body.logged-in.track-dl [data-track="ml"] .lesson-unavailable,
+body.logged-in.track-dl #track-mt .lesson-access,
+body.logged-in.track-dl #track-mt .lesson-unavailable,
+body.logged-in.track-dl [data-track="mt"] .lesson-access,
+body.logged-in.track-dl [data-track="mt"] .lesson-unavailable {
+  display: none !important;
+}
+
+/* Hide DL, ML, MT buttons for DT users */
+body.logged-in.track-dt #track-dl .lesson-access,
+body.logged-in.track-dt #track-dl .lesson-unavailable,
+body.logged-in.track-dt [data-track="dl"] .lesson-access,
+body.logged-in.track-dt [data-track="dl"] .lesson-unavailable,
+body.logged-in.track-dt #track-ml .lesson-access,
+body.logged-in.track-dt #track-ml .lesson-unavailable,
+body.logged-in.track-dt [data-track="ml"] .lesson-access,
+body.logged-in.track-dt [data-track="ml"] .lesson-unavailable,
+body.logged-in.track-dt #track-mt .lesson-access,
+body.logged-in.track-dt #track-mt .lesson-unavailable,
+body.logged-in.track-dt [data-track="mt"] .lesson-access,
+body.logged-in.track-dt [data-track="mt"] .lesson-unavailable {
+  display: none !important;
+}
+
+/* Hide DL, DT, MT buttons for ML users */
+body.logged-in.track-ml #track-dl .lesson-access,
+body.logged-in.track-ml #track-dl .lesson-unavailable,
+body.logged-in.track-ml [data-track="dl"] .lesson-access,
+body.logged-in.track-ml [data-track="dl"] .lesson-unavailable,
+body.logged-in.track-ml #track-dt .lesson-access,
+body.logged-in.track-ml #track-dt .lesson-unavailable,
+body.logged-in.track-ml [data-track="dt"] .lesson-access,
+body.logged-in.track-ml [data-track="dt"] .lesson-unavailable,
+body.logged-in.track-ml #track-mt .lesson-access,
+body.logged-in.track-ml #track-mt .lesson-unavailable,
+body.logged-in.track-ml [data-track="mt"] .lesson-access,
+body.logged-in.track-ml [data-track="mt"] .lesson-unavailable {
+  display: none !important;
+}
+
