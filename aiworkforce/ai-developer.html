@@ -63,7 +63,7 @@
   .logos a:has(img){display:flex; align-items:center; text-decoration:none;}
   .btn-learning-nav{
     display:inline-flex; align-items:center; justify-content:center; gap:6px;
-    padding:6px 16px; border:1px solid var(--amber); border-radius:100px;
+    padding:6px 16px; border:1px solid var(--amber); border-radius:8px;
     color:var(--amber-soft); background:rgba(245,130,31,0.1);
     font-size:0.85rem; font-weight:600; line-height:1.25; text-decoration:none;
     transition:transform .18s ease, background .18s ease;
@@ -590,9 +590,11 @@
 
 <section class="hero">
   <div class="logos">
-    <a href="index.html"><img src="images/partner-logos.png" alt="PMU-B, CMU, CAMT, dii, DITC, AiAT"></a>
+    <a href="index.html" class="main-logo-link"><img src="images/partner-logos.png" alt="PMU-B, CMU, CAMT, dii, DITC, AiAT"></a>
+    <a href="index.html" class="btn-back-home"><i class="fa-solid fa-arrow-left"></i> กลับหน้าหลัก</a>
     <div style="margin-left:auto; display:flex; gap:12px; align-items:center; flex-wrap:wrap; justify-content:flex-end;">
-      <a href="ai-marketing.html" style="color:var(--amber-soft); text-decoration:none; border:1px solid var(--line); padding:6px 14px; border-radius:100px; font-family:inherit; font-weight:600; font-size:0.85rem;">สาย Marketing →</a>
+      <a href="ai-marketing.html" class="track-switch-btn">สาย Marketing <i class="fa-solid fa-arrow-right"></i></a>
+      <span class="track-badge" style="display:none;"></span>
       <button class="btn-login-nav" onclick="openAuthModal()">Login</button>
     </div>
   </div>
@@ -670,7 +672,7 @@
     <div class="track-row">
       <span class="track-num">01</span>
       <div class="track-pill">
-        <span class="picon">&lt;/&gt;</span>
+        <span class="picon"><i class="fa-solid fa-code"></i></span>
         <div>
           <h3>AI Developer Learner</h3>
           <p>นักพัฒนาที่ต้องการสร้าง AI-enabled software</p>
@@ -680,7 +682,7 @@
     <div class="track-row">
       <span class="track-num">02</span>
       <div class="track-pill">
-        <span class="picon">🧠</span>
+        <span class="picon"><i class="fa-solid fa-chalkboard-user"></i></span>
         <div>
           <h3>AI Developer Trainer</h3>
           <p>ผู้นำทีม Dev ที่วาง architecture และ mentoring</p>

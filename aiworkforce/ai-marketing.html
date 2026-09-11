@@ -63,7 +63,7 @@
   .logos a:has(img){display:flex; align-items:center; text-decoration:none;}
   .btn-learning-nav{
     display:inline-flex; align-items:center; justify-content:center; gap:6px;
-    padding:6px 16px; border:1px solid rgba(255,255,255,0.65); border-radius:100px;
+    padding:6px 16px; border:1px solid rgba(255,255,255,0.65); border-radius:8px;
     color:#fff; background:rgba(58,31,12,0.16);
     font-size:0.85rem; font-weight:600; line-height:1.25; text-decoration:none;
     transition:transform .18s ease, background .18s ease;
@@ -593,9 +593,11 @@
 
 <section class="hero">
   <div class="logos">
-    <a href="index.html"><img src="images/partner-logos.png" alt="PMU-B, CMU, CAMT, dii, DITC, AiAT"></a>
+    <a href="index.html" class="main-logo-link"><img src="images/partner-logos.png" alt="PMU-B, CMU, CAMT, dii, DITC, AiAT"></a>
+    <a href="index.html" class="btn-back-home"><i class="fa-solid fa-arrow-left"></i> กลับหน้าหลัก</a>
     <div style="margin-left:auto; display:flex; gap:12px; align-items:center; flex-wrap:wrap; justify-content:flex-end;">
-      <a href="ai-developer.html" style="color:#fff; text-decoration:none; border:1px solid rgba(255,255,255,0.45); padding:6px 14px; border-radius:100px; font-family:inherit; font-weight:600; font-size:0.85rem;">สาย Developer <i class="fa-solid fa-arrow-right"></i></a>
+      <a href="ai-developer.html" class="track-switch-btn">สาย Developer <i class="fa-solid fa-arrow-right"></i></a>
+      <span class="track-badge" style="display:none;"></span>
       <button class="btn-login-nav" onclick="openAuthModal()">Login</button>
     </div>
   </div>
@@ -668,7 +670,7 @@
 <section class="section" id="tracks">
   <div class="section-head">
     <span class="kicker">Curriculum · AI Marketing</span>
-    <h2>2 เส้นทางการเรียนรู้สำหรับสาย Digital Marketing</h2>
+    <h2>เส้นทางการเรียนรู้สำหรับสาย Digital Marketing</h2>
   </div>
   <div class="tracks-v2">
     <div class="track-row">
@@ -676,18 +678,8 @@
       <div class="track-pill">
         <span class="picon"><i class="fa-solid fa-bullhorn"></i></span>
         <div>
-          <h3>AI Marketing Learner</h3>
+          <h3>AI Marketing</h3>
           <p>นักการตลาดที่สร้าง campaign และ dashboard</p>
-        </div>
-      </div>
-    </div>
-    <div class="track-row">
-      <span class="track-num">02</span>
-      <div class="track-pill">
-        <span class="picon"><i class="fa-solid fa-chart-line"></i></span>
-        <div>
-          <h3>AI Marketing Trainer</h3>
-          <p>ผู้นำทีมกลยุทธ์ AI marketing และ governance</p>
         </div>
       </div>
     </div>
@@ -737,7 +729,7 @@
     <div class="curric-head">
       <div class="curric-badge">ML</div>
       <div>
-        <h3>Track-specific Lecture + Lab + Workshop — AI Marketing Learner</h3>
+        <h3>Track-specific Lecture + Lab + Workshop — AI Marketing</h3>
         <p>นักการตลาดที่สร้าง campaign และ dashboard</p>
       </div>
     </div>
@@ -758,30 +750,6 @@
     </table>
   </div>
 
-  <div class="curric-block theme-mt" id="track-mt" data-track="mt">
-    <div class="curric-head">
-      <div class="curric-badge">MT</div>
-      <div>
-        <h3>Track-specific Lecture + Lab + Workshop — AI Marketing Trainer</h3>
-        <p>ผู้กำหนดกลยุทธ์ AI marketing และ governance</p>
-      </div>
-    </div>
-    <table class="curric-table">
-      <thead><tr><th>Session</th><th>ชั่วโมง</th><th>หัวข้อ</th><th></th></tr></thead>
-      <tbody>
-        <tr><td>Task Specific Lecture + Lab</td><td>3</td><td>Vibe Code + UXUI</td><td><span class="mode-pill badge-only">Lecture + Lab</span><span class="mode-pill lesson-unavailable"><i class="fa-solid fa-clock" aria-hidden="true"></i> ดูบทเรียน</span></td></tr>
-        <tr><td>Task Specific Lecture + Lab</td><td>3</td><td>Vibe Code + UXUI</td><td><span class="mode-pill badge-only">Lecture + Lab</span><span class="mode-pill lesson-unavailable"><i class="fa-solid fa-clock" aria-hidden="true"></i> ดูบทเรียน</span></td></tr>
-        <tr><td>Task Specific Lecture + Lab</td><td>3</td><td>Vibe Code + Data Analytics</td><td><span class="mode-pill badge-only">Lecture + Lab</span><span class="mode-pill lesson-unavailable"><i class="fa-solid fa-clock" aria-hidden="true"></i> ดูบทเรียน</span></td></tr>
-        <tr><td>Task Specific Lecture + Lab</td><td>3</td><td>Vibe Code + Data Analytics</td><td><span class="mode-pill badge-only">Lecture + Lab</span><span class="mode-pill lesson-unavailable"><i class="fa-solid fa-clock" aria-hidden="true"></i> ดูบทเรียน</span></td></tr>
-        <tr><td>Task Specific Lecture + Lab</td><td>4</td><td>AI and Media</td><td><span class="mode-pill badge-only">Lecture + Lab</span><span class="mode-pill lesson-unavailable"><i class="fa-solid fa-clock" aria-hidden="true"></i> ดูบทเรียน</span></td></tr>
-        <tr><td>Task Specific Lecture + Lab</td><td>4</td><td>AI and Social Reasoning</td><td><span class="mode-pill badge-only">Lecture + Lab</span><span class="mode-pill lesson-unavailable"><i class="fa-solid fa-clock" aria-hidden="true"></i> ดูบทเรียน</span></td></tr>
-        <tr><td>Task Specific Lecture + Lab</td><td>4</td><td>Agentic AI for Marketing</td><td><span class="mode-pill badge-only">Lecture + Lab</span><span class="mode-pill lesson-unavailable"><i class="fa-solid fa-clock" aria-hidden="true"></i> ดูบทเรียน</span></td></tr>
-        <tr><td>Task Specific Lecture + Lab</td><td>4</td><td>AI Enable System (Vibe)</td><td><span class="mode-pill badge-only">Lecture + Lab</span><span class="mode-pill lesson-unavailable"><i class="fa-solid fa-clock" aria-hidden="true"></i> ดูบทเรียน</span></td></tr>
-        <tr><td>Task Specific Mini Workshop</td><td>3</td><td>Real Use Case Implementation</td><td><span class="mode-pill badge-only">Workshop</span><span class="mode-pill lesson-unavailable"><i class="fa-solid fa-clock" aria-hidden="true"></i> ดูบทเรียน</span></td></tr>
-        <tr><td>Task Specific Mini Workshop</td><td>3</td><td>Real Use Case Implementation</td><td><span class="mode-pill badge-only">Workshop</span><span class="mode-pill lesson-unavailable"><i class="fa-solid fa-clock" aria-hidden="true"></i> ดูบทเรียน</span></td></tr>
-      </tbody>
-    </table>
-  </div>
 </section>
 
 <section class="section" id="calendar">

@@ -24,14 +24,16 @@ function showStatus(message, isError = false) {
 function lessonState(lesson) {
   if (Number(lesson.completed)) return { text: 'เรียนจบแล้ว', className: 'lesson-state complete' };
   if (Number(lesson.started)) return { text: 'กำลังเรียน', className: 'lesson-state' };
-  return { text: 'ยังไม่เริ่ม', className: 'lesson-state' };
+  return { text: 'ดูบทเรียน', className: 'lesson-state' };
 }
 
 function renderCourse(course, lessons) {
   const panel = createElement('article', 'course-panel');
   let colorClass = '';
-  if (course.slug === 'ai-marketing' || course.slug === 'core-ai-foundation') {
-    colorClass = ' foundation';
+  if (course.slug === 'ai-marketing') {
+    colorClass = ' orange';
+  } else if (course.slug === 'core-ai-foundation') {
+    colorClass = ' teal';
   }
   
   const head = createElement('header', `course-head${colorClass}`);
@@ -58,8 +60,7 @@ function renderCourse(course, lessons) {
     link.href = `lesson.html?lesson=${encodeURIComponent(lesson.id)}`;
     const copy = createElement('div', 'lesson-copy');
     copy.append(
-      createElement('strong', '', lesson.title),
-      createElement('span', '', `${Number(lesson.checkpointCount) || 0} แบบทดสอบ/กิจกรรม`)
+      createElement('strong', '', lesson.title)
     );
     const state = lessonState(lesson);
     link.append(
@@ -103,7 +104,21 @@ async function loadDashboard() {
       allCoursesLink.hidden = false;
       coursesToShow = [selectedCourse];
     } else {
-      coursesToShow = access.courses;
+      const track = (access.track || 'all').toLowerCase();
+
+      // Map track to allowed course slugs
+      const TRACK_COURSES = {
+        dl: ['core-ai-foundation', 'ai-developer-learner'],
+        dt: ['core-ai-foundation', 'ai-developer-trainer'],
+        ml: ['core-ai-foundation', 'ai-marketing'],
+      };
+
+      if (track !== 'all' && TRACK_COURSES[track]) {
+        const allowed = TRACK_COURSES[track];
+        coursesToShow = access.courses.filter((c) => allowed.includes(c.slug));
+      } else {
+        coursesToShow = access.courses;
+      }
     }
 
     const courseResults = await Promise.all(coursesToShow.map(async (course) => {
