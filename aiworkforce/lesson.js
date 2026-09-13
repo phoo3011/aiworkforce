@@ -77,11 +77,21 @@ function renderMaterials(materials) {
     link.target = '_blank';
     link.rel = 'noopener noreferrer';
 
+    const titleGroup = document.createElement('div');
+    titleGroup.className = 'material-title-group';
+
+    const icon = document.createElement('i');
+    icon.className = 'fa-solid fa-file-pdf material-icon';
+    icon.setAttribute('aria-hidden', 'true');
+
     const title = document.createElement('strong');
     title.textContent = material.title;
+
+    titleGroup.append(icon, title);
+
     const action = document.createElement('span');
     action.innerHTML = 'เปิดสไลด์ <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>';
-    link.append(title, action);
+    link.append(titleGroup, action);
     materialsList.append(link);
   });
 }

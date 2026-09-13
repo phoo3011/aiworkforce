@@ -162,9 +162,11 @@ body {
   display: flex; align-items: center; justify-content: space-between; gap: 14px;
   padding: 14px 0; border-top: 1px solid var(--learn-border); color: var(--learn-navy); text-decoration: none;
 }
-.material-link strong { font-size: .92rem; }
-.material-link span { color: var(--learn-teal); font-size: .82rem; font-weight: 600; white-space: nowrap; }
-.material-link:hover strong, .material-link:hover span { color: var(--learn-teal); }
+.material-title-group { display: flex; align-items: center; gap: 12px; }
+.material-icon { color: var(--learn-orange); font-size: 1.15rem; transition: color 0.15s ease; }
+.material-link strong { font-size: .92rem; transition: color 0.15s ease; }
+.material-link span { color: var(--learn-teal); font-size: .82rem; font-weight: 600; white-space: nowrap; transition: color 0.15s ease; }
+.material-link:hover strong, .material-link:hover span, .material-link:hover .material-icon { color: var(--learn-teal); }
 .test-panel { align-self: start; padding: 24px; }
 .test-panel[hidden] { display: none; }
 .test-panel h2 { margin: 0 0 8px; font-size: 1.2rem; }
