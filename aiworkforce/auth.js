@@ -268,10 +268,14 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   document.getElementById('btn-login-google').addEventListener('click', () => {
-    beginPopupLogin(new GoogleAuthProvider());
+    const provider = new GoogleAuthProvider();
+    provider.setCustomParameters({ prompt: 'select_account' });
+    beginPopupLogin(provider);
   });
   document.getElementById('btn-login-microsoft').addEventListener('click', () => {
-    beginPopupLogin(new OAuthProvider('microsoft.com'));
+    const provider = new OAuthProvider('microsoft.com');
+    provider.setCustomParameters({ prompt: 'select_account' });
+    beginPopupLogin(provider);
   });
   document.getElementById('btn-logout').addEventListener('click', async () => {
     await signOut(auth);
