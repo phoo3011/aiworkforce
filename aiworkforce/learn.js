@@ -44,7 +44,7 @@ function renderCourse(course, lessons) {
   head.append(createElement(
     'div',
     'progress-copy',
-    `${Number(course.completedLessons) || 0} / ${Number(course.lessonCount) || 0} บทเรียนจบแล้ว`
+    `${Number(course.completedLessons) || 0} / ${Number(course.lessonCount) || 0} บทเรียน`
   ));
   panel.append(head);
 

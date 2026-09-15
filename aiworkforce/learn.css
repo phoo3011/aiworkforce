@@ -109,7 +109,17 @@ body {
 .course-head.orange { background: linear-gradient(135deg, #6b300c, #dd6d1b); }
 .course-head h2 { margin: 0 0 8px; font-size: 1.45rem; }
 .course-head p { margin: 0; color: rgba(255,255,255,.78); font-size: .9rem; line-height: 1.6; }
-.progress-copy { margin-top: 13px; color: var(--learn-mint); font: 500 .78rem 'IBM Plex Mono', monospace; }
+.progress-copy {
+  display: inline-block;
+  margin-top: 14px;
+  padding: 4px 10px;
+  background: rgba(94, 230, 200, 0.15);
+  border: 1px solid rgba(94, 230, 200, 0.3);
+  border-radius: 20px;
+  color: var(--learn-mint);
+  font-size: .72rem;
+  font-weight: 500;
+}
 .lesson-list { margin: 0; padding: 0; list-style: none; }
 .lesson-item { border-top: 1px solid var(--learn-border); }
 .lesson-link {
@@ -138,14 +148,14 @@ body {
 .lesson-state {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 6px 12px;
-  border-radius: 20px;
-  font-size: .78rem;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 14px;
+  font-size: .72rem;
   font-weight: 600;
   white-space: nowrap;
 }
-.lesson-state i { font-size: 0.9em; }
+.lesson-state i { font-size: 0.9em; transform: translateY(2px); }
 .state-pending { background: #f3f7f6; color: var(--learn-muted); border: 1px solid var(--learn-border); }
 .state-started { background: #fff4eb; color: var(--learn-orange); border: 1px solid #fbd9bb; }
 .state-complete { background: #e5f5f2; color: #07805e; border: 1px solid #bce6dc; }
