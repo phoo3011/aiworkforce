@@ -135,8 +135,20 @@ body {
 }
 .lesson-copy strong { display: block; font-size: .98rem; }
 .lesson-copy span { display: block; margin-top: 3px; color: var(--learn-muted); font-size: .78rem; }
-.lesson-state { color: var(--learn-muted); font-size: .78rem; white-space: nowrap; }
-.lesson-state.complete { color: #07805e; font-weight: 600; }
+.lesson-state {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: .78rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.lesson-state i { font-size: 0.9em; }
+.state-pending { background: #f3f7f6; color: var(--learn-muted); border: 1px solid var(--learn-border); }
+.state-started { background: #fff4eb; color: var(--learn-orange); border: 1px solid #fbd9bb; }
+.state-complete { background: #e5f5f2; color: #07805e; border: 1px solid #bce6dc; }
 .empty-lessons { padding: 22px 28px; color: var(--learn-muted); }
 
 .lesson-layout { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(280px, .7fr); gap: 28px; margin-top: 32px; }

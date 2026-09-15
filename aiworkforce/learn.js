@@ -22,9 +22,9 @@ function showStatus(message, isError = false) {
 }
 
 function lessonState(lesson) {
-  if (Number(lesson.completed)) return { text: 'เรียนจบแล้ว', className: 'lesson-state complete' };
-  if (Number(lesson.started)) return { text: 'กำลังเรียน', className: 'lesson-state' };
-  return { text: 'ดูบทเรียน', className: 'lesson-state' };
+  if (Number(lesson.completed)) return { html: '<i class="fa-solid fa-circle-check"></i> เรียนจบแล้ว', className: 'lesson-state state-complete' };
+  if (Number(lesson.started)) return { html: '<i class="fa-solid fa-clock"></i> กำลังเรียน', className: 'lesson-state state-started' };
+  return { html: '<i class="fa-solid fa-play"></i> ดูบทเรียน', className: 'lesson-state state-pending' };
 }
 
 function renderCourse(course, lessons) {
@@ -63,10 +63,13 @@ function renderCourse(course, lessons) {
       createElement('strong', '', lesson.title)
     );
     const state = lessonState(lesson);
+    const stateElement = document.createElement('span');
+    stateElement.className = state.className;
+    stateElement.innerHTML = state.html;
     link.append(
       createElement('span', 'lesson-number', String(lesson.lessonOrder)),
       copy,
-      createElement('span', state.className, state.text)
+      stateElement
     );
     item.append(link);
     list.append(item);
